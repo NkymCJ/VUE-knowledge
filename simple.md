@@ -267,3 +267,71 @@ VUE 学习
 
     - v-if 每次都会重新删除或创建元素，切换耗性能
     - v-show 只是切换元素的 display 样式，初始耗性能
+
+13. 过滤器
+
+    过滤器用在两个地方：插值表达式 和 v-bind 表达式
+    
+    **过滤器接收表达式的值作为第一个参数，还可接收其他参数**
+
+    **过滤器可以串联，将前一个过滤器处理的结果传给下一个过滤器**
+
+    **过滤器采用就近原则，如果私有过滤器与全局过滤器名称一致，优先调用私有过滤器**
+
+    - 定义全局过滤器
+    
+      **使用全局过滤器时，全局过滤器需在创建实例之前定义**
+    
+      ```
+      // DOM
+      {{ content | myFilter }}
+
+      // 注册
+      Vue.filter('myFilter', function (data) {
+          return data + '123';
+      });
+      ```
+
+    - 接收更多参数
+
+      ```
+      // DOM
+      {{ content | myFilter('123') }}
+      
+      // 注册
+      Vue.filter('myFilter', function (data,arg0) {
+          return data + arg0;
+      });
+      ```
+
+    - 串联过滤器
+
+      ```
+      // DOM
+      {{ content | myFilter('123') | myFilter1 }}
+
+      // 注册
+      Vue.filter('myFilter', function (data, arg0) {
+        return data + arg0;
+      });
+      Vue.filter('myFilter1', function (data) {
+        return data + '!';
+      });
+      ```
+
+    - 定义私有过滤器
+
+      ```
+      filters: {
+        myFilter:function(data){
+            return data + '!';
+        }
+      }
+      ```
+
+14. 自定义指令
+
+    - 定义全局指令
+
+      参数1：指令名称 **定义时不需要加 v- 前缀，调用时需要加上 v- 前缀**
+      参数2：对象，钩子函数
