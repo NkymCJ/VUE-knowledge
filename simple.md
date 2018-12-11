@@ -6,7 +6,7 @@ VUE 学习
 
 1. 实例
     
-    `var vm = new Vue({}) //创建实例vm`
+    var vm = new Vue({}) //创建实例vm
 
 2. 挂载点
 
@@ -60,7 +60,7 @@ VUE 学习
 
 5. 绑定属性
 
-    `v-bind:属性名，简写为 :属性名`
+    v-bind:属性名，简写为 :属性名
 
     ```
     <div :title="content == 'Hello World'? content: ''">{{content}}</div>
@@ -70,7 +70,7 @@ VUE 学习
 
 6. 绑定事件
 
-    `v-on:事件，简写为 @:事件`
+    v-on:事件，简写为 @:事件
 
     ```
     // 挂载点下
@@ -101,17 +101,19 @@ VUE 学习
 
 8. 双向绑定
 
-    `v-model:属性`
+    v-model:属性
 
     **只能运用在表单元素中**
 
 9. 绑定class
 
-    `v-bind:属性名，简写为 :属性名`
+    v-bind:属性名，简写为 :属性名
 
     **v-bind:class 可以与普通的class属性共存**
 
-    `<div class="static" v-bind:class="dynamic"></div>`
+    ```
+    <div class="static" v-bind:class="dynamic"></div>
+    ```
         
     - 语法
 
@@ -191,7 +193,7 @@ VUE 学习
 
 10. 绑定style
 
-    `v-bind:属性名，简写为 :属性名`
+    v-bind:属性名，简写为 :属性名
 
     - 语法
 
@@ -225,7 +227,7 @@ VUE 学习
 
 11. v-for指令
 
-    - 遍历数组 `v-for="(item,index) in items"`
+    - 遍历数组 v-for="(item,index) in items"
 
       ```
       // DOM
@@ -236,7 +238,7 @@ VUE 学习
       }
       ```
 
-    - 迭代对象属性 `v-for="(value,key,index) in obj"`
+    - 迭代对象属性 v-for="(value,key,index) in obj"
 
       ```
       // DOM
@@ -250,7 +252,7 @@ VUE 学习
       }
       ```
 
-    - 取值范围重复 `v-for="count in 10"`
+    - 取值范围重复 v-for="count in 10"
 
       ```
       // DOM
