@@ -103,13 +103,13 @@ VUE 学习
 
     `v-model:属性`
 
-    **PS: 只能运用在表单元素中**
+    **只能运用在表单元素中**
 
 9. 绑定class
 
     `v-bind:属性名，简写为 :属性名`
 
-    **PS: v-bind:class 可以与普通的class属性共存**
+    **v-bind:class 可以与普通的class属性共存**
 
     `<div class="static" v-bind:class="dynamic"></div>`
         
