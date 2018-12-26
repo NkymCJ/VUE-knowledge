@@ -10,7 +10,7 @@ VUE 学习
 
 2. 挂载点
 
-  **挂载点不能是 body**
+    **挂载点不能是 body**
 
     ```
     <div id="dot"></div> //挂载点
@@ -457,3 +457,18 @@ VUE 学习
         console.log(binding.value.text1) // "World"
       });
       ```
+
+### 生命周期
+
+![生命周期](生命周期.png '生命周期')
+
+1. 创建期间的生命周期函数
+
+    - beforeCreate:function(){} (简写：beforeCreate(){})
+    
+    - create:function(){} (简写：create(){})
+
+
+2. 运行期间的生命周期函数
+
+3. 销毁期间的生命周期函数
