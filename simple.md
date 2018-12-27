@@ -56,7 +56,7 @@ VUE 学习
     | v-text | 显示数据 | 无 | 不转义 |
     | v-html | 显示数据 | 无 | 转义 |
 
-    *使用v-cloak(1.添加属性：v-cloak；2.添加样式：[v-cloak]{display:none;})解决闪烁问题，有必要时使用 !important*
+    **使用v-cloak(1.添加属性：v-cloak；2.添加样式：[v-cloak]{display:none;})解决闪烁问题，有必要时使用 !important**
 
 5. 绑定属性
 
