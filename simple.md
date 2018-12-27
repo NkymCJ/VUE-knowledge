@@ -44,17 +44,17 @@ VUE 学习
 
 4. 获取数据
 
-    ```
-    <div>{{content}}</div>
-    <div v-text="content"></div>
-    <div v-html="content"></div>
-    ```
-
     | 类型 | 共同点 | 闪烁问题  | 转义问题 |
     | - | - | - | - | - |
     | {{}} | 显示数据 | 有 | 不转义 |
     | v-text | 显示数据 | 无 | 不转义 |
     | v-html | 显示数据 | 无 | 转义 |
+
+    ```
+    <div>{{content}}</div>
+    <div v-text="content"></div>
+    <div v-html="content"></div>
+    ```
 
     **使用v-cloak(1.添加属性：v-cloak；2.添加样式：[v-cloak]{display:none;})解决闪烁问题，有必要时使用 !important**
 
