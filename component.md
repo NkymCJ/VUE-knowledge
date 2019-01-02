@@ -6,11 +6,11 @@ VUE 学习
 
 1. 创建全局组件的第一种方式
 
-    - 使用 **Vue.extend** 创建 Vue 扩展实例构造器
+    - 使用 **Vue.extend** 创建Vue扩展实例构造器
 
         *template 属性指向的模板内容必须有且只有一个根元素*
 
-    - 使用 **Vue.component('组件名称',Vue 扩展实例构造器)** 注册组件
+    - 使用 **Vue.component('组件名称',Vue扩展实例构造器)** 注册组件
 
         *组件名称最好命名方式：小写&&短横线分隔*
 
@@ -303,6 +303,55 @@ VUE 学习
                         // console.log('调用了父组件身上的show方法');
                         this.info = data;
                     }
+                }
+            });
+            ```
+
+    - refs获取DOM元素和组件
+
+        + 示例
+
+            ```
+            <!-- HTML -->
+            <div id="app">
+                <input type="button" value="获取元素" @click="getElement">
+                <hr>
+                <!-- <h3 id="myH3" ref="myH3">Hello World</h3> -->
+                <login ref="muLogin"></login>
+            </div>
+
+            <!-- SCRIPT -->
+            var login = {
+                template: '<h3>组件</h3>',
+                data() {
+                    return {
+                        msg: '123'
+                    }
+                },
+                methods: {
+                    show() {
+                        console.log('123');
+                    }
+                }
+            };
+            var vm = new Vue({
+                el: '#app',
+                data: function () {
+                    return {
+
+                    }
+                },
+                methods: {
+                    getElement() {
+                        // console.log(document.getElementById('myH3').innerText);
+                        // console.log(this.$refs.myH3.innerText);
+                        // console.log(this.$refs.muLogin);
+                        // console.log(this.$refs.muLogin.msg);
+                        console.log(this.$refs.muLogin.show());
+                    }
+                },
+                components: {
+                    login
                 }
             });
             ```
