@@ -6,3 +6,5 @@
 | - | - |
 | simple | 语法 |
 | lifecycle | 生命周期 |
+| component | 组件 |
+| vue-resource | 请求 |

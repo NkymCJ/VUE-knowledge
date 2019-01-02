@@ -11,6 +11,7 @@ VUE 学习
 // 配置全局的根节点和返回数据格式
 Vue.http.options.root = 'http://api_local.io/API_simple/';
 Vue.http.options.emulateJSON = true;
+
 // VUE实例
 var vm = new Vue({
     el: '#app',
@@ -65,7 +66,7 @@ var vm = new Vue({
                     alert('删除失败');
                 }
             });
-        },
+        }
     },
     created() {
         this.getAllList();
