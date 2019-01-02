@@ -223,7 +223,7 @@ VUE 学习
 
             ```
             <!-- HTML -->
-            <div id="app" v-cloak>
+            <div id="app">
                 <com1 v-bind:parentmsg="msg"></com1>
             </div>
 
@@ -258,7 +258,8 @@ VUE 学习
 
             ```
             <!-- HTML -->
-            <div id="app" v-cloak>
+            <div id="app">
+                <!-- 把父组件的 show 方法放在子组件的func上，供emit使用 -->
                 <com1 @func="show"></com1>
             </div>
             <template id="tmp1">
