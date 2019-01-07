@@ -59,7 +59,44 @@ VUE 学习
 
     **使用v-cloak(1.添加属性：v-cloak；2.添加样式：[v-cloak]{display:none;})解决闪烁问题，有必要时使用 !important**
 
-5. 绑定属性
+5. 计算属性
+
+    在 **computed** 中可以定义一些属性，这些属性叫做计算属性。它的本质是一个方法， 只不过在使用的时候，直接把它们的名称当作属性来使用，而不是把它们当作方法去调用
+
+    **引用的时候一定不要加 () 去调用**
+
+    **计算属性内部所用到的任何 data 中的数据发生变化，就会立即重新计算该值**
+
+    **计算属性的求值结果会被保存起来，方便下次直接使用，若无发生变化，则不会重新对其求值**
+
+    示例
+
+    ```
+    <!-- HTML -->
+    <div id="app">
+        <input type="text" v-model="firstname"> +
+        <input type="text" v-model="lastname"> =
+        <input type="text" v-model="fullname">
+    </div>
+
+    <!-- SCRIPT -->
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                firstname: '',
+                lastname: ''
+            }
+        },
+        computed: {
+            fullname(){
+                return this.firstname + '-' + this.lastname;
+            }
+        }
+    })
+    ```
+
+6. 绑定属性
 
     v-bind:属性名，简写为 :属性名
 
@@ -69,7 +106,7 @@ VUE 学习
 
     **v-bind的绑定的值为 JS表达式，可以进行简单的操作**
 
-6. 绑定事件
+7. 绑定事件
 
     v-on:事件，简写为 @:事件
 
@@ -91,7 +128,7 @@ VUE 学习
 
     **获取实例 data 的数据或调用 methods 的方法：this.数据属性名 或 this.方法名来访问(this指向new出来的实例)**
 
-7. 事件修饰符
+8. 事件修饰符
 
     - .stop 阻止冒泡
     - .prevent 阻止默认事件
@@ -100,13 +137,13 @@ VUE 学习
     - .once 只触发一次
     - .passive 告诉浏览器不阻止事件的默认行为
 
-8. 双向绑定
+9. 双向绑定
 
     v-model:属性
 
     **只能运用在表单元素中**
 
-9. 绑定class
+10. 绑定class
 
     v-bind:属性名，简写为 :属性名
 
@@ -192,7 +229,7 @@ VUE 学习
       }
       ```
 
-10. 绑定style
+11. 绑定style
 
     v-bind:属性名，简写为 :属性名
 
@@ -226,7 +263,7 @@ VUE 学习
       }
       ```
 
-11. v-for指令
+12. v-for指令
 
     - 遍历数组 v-for="(item,index) in items"
 
@@ -266,12 +303,12 @@ VUE 学习
     - key 绑定的属性智能是 number 或 string 类型
     - key 需要使用 v-bind 绑定，即 v-bind:key
 
-12. v-if / v-show
+13. v-if / v-show
 
     - v-if 每次都会重新删除或创建元素，切换耗性能
     - v-show 只是切换元素的 display 样式，初始耗性能
 
-13. 过滤器
+14. 过滤器
 
     过滤器用在两个地方：插值表达式 和 v-bind 表达式
     
@@ -332,7 +369,7 @@ VUE 学习
       }
       ```
 
-14. 自定义指令
+15. 自定义指令
 
     **定义时不需要加 v- 前缀，调用时需要加上 v- 前缀**
 

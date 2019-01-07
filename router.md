@@ -14,26 +14,34 @@ VUE 学习
 
 1. 安装 vue-router 路由模块
 
+    示例
+
     直接引入脚本文件：`<script src="/vue-router.js"></script>`
 
 2. 创建一个路由对象
 
     当引入 vue-router 包之后，在 window 全局对象中，就有了一个路由的构造函数，叫做 **VueRouter** 。在 new 路由对象的时候，可以为构造函数传递一个 **配置对象**
 
+    示例
+
     `var routerObj = new VueRouter({routes:routes}); // 可简写为{routes}`
 
-3. routes 路由匹配规则
+3. routes 路由匹配规则，数组
 
     - 每条路由规则都是一个对象
 
-    - **path**。表示要监听 哪个路由链接地址
+    - **path**。 表示要监听哪个路由链接地址
 
-    - **component**。 表示 Vue.extend() 创建的组件构造器 或 一个组件配置对象
+    - **component**。 表示 Vue.extend() 创建的组件构造器 或 一个组件配置对象，Component
+
+    - **components**。 表示 命名视图组件，对象，属性名为字符串，值为 Component
 
     - **redirect**。 表示重定向，即当访问 /a 时， URL会替换成 /b
 
-    - **alias**。表示别名，即当访问 /a 时，URL会保持为 /a，但匹配到的内容为 /b
+    - **alias**。 表示别名，即当访问 /a 时，URL会保持为 /a，但匹配到的内容为 /b
     
+    - **children**。 表示路由嵌套，数组
+
     示例
 
     ```
@@ -48,6 +56,8 @@ VUE 学习
 
     将 routes 路由规则 注册到 Vue 实例上，监听 URL 地址的变化，展示对应组件
 
+    示例
+
     ```
     var vm = new Vue({
         el: '#app',
@@ -59,11 +69,15 @@ VUE 学习
 
     路由出口。vue-router 提供的元素，占位符。路由匹配到的组件在此处渲染
 
+    示例
+
     `<router-view></router-view>`
 
 6. router-link
 
     导航。通过 to 属性来指定链接，默认会被渲染成一个 a标签，可通过 tag 属性更改
+
+    示例
 
     ```
     <router-link to="/login">登录</router-link>
@@ -74,4 +88,10 @@ VUE 学习
 
     使用 transition 元素包裹 router-view，增加对应样式即可
 
-8. 完整例子详见 **demo/router/路由起步**
+8. 完整例子详见 **demo/router/路由起步.html**
+
+---
+
+路由参数
+
+---
