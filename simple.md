@@ -2,8 +2,7 @@
 
 VUE 学习
 
-当我们导入包之后，在浏览器内存中，就多了一个Vue构造函数
-
+当我们导入VUE脚本之后，在浏览器内存中，就多了一个Vue构造函数
 
 ## 实例
 
@@ -15,7 +14,7 @@ var vm = new Vue({});
 
 ## 挂载点
 
-vm实例就只能处理挂载点下的内容
+vm实例只能处理挂载点下的内容
 
 挂载点不能是body
 
@@ -77,21 +76,21 @@ data() {
 
 解决闪烁问题：添加v-cloak样式
 
-VUE会在插值表达式替换完成时清除此样式
-
 ```
 [v-cloak] {
   display:none !important;
 }
 ```
 
+VUE会在插值表达式替换完成时清除此样式
+
 ## 计算属性
 
-模板内的插值表达式非常便利，可以用于简单运算，但是放入太多逻辑会让模板过重且难以维护
+模板内的插值表达式非常便利，可以用于简单运算，但是放入太多逻辑会让模板过重且难以维护，例如下面这个插值表达式
 
 ```{{ message.split('').reverse().join('') }}```
 
-所以对于复杂逻辑，要另辟蹊径：计算属性、侦听器、方法
+所以对于复杂逻辑，要另辟蹊径：使用计算属性、侦听器、方法
 
 可以在computed属性中可以定义一些属性，这些属性叫做计算属性。它们的本质是一个方法，只不过在使用的时候，直接把它们的名称当作属性来使用，而不是把它们当作方法去调用，使用的时候一定不要加()
 
@@ -140,7 +139,7 @@ var vm = new Vue({
         }
     },
     // vm的computed属性里面定义fullName计算属性
-    // 此处因为fullName只是获取展示，所以不需要SETTER
+    // 此示例因为fullName只是获取展示，所以不需要SETTER
     computed: {
         fullName(){
             return this.firstName + ' ' + this.lastName;
@@ -175,9 +174,7 @@ v-bind中可以写合法的JS表达式，进行简单的操作
 
 ```
 <div :title="content">{{content}}</div>
-
 <div :title="content + '123'">{{content}}</div>
-
 <div :title="content == 'Hello Vue'? content : ''">{{content}}</div>
 ```
 
@@ -228,7 +225,7 @@ v-on:事件，可以简写为@:事件
 
 3. 事件参数
 
-    当有其他参数时，需要event对象可以使用$event获取
+    当有其他参数时，需要event对象可以使用$event
 
     ```
     <div id="parent" @click="show('Hello Parent',$event)">
@@ -287,15 +284,17 @@ v-bind:class 可以与普通的class属性共存
 
 1. 使用数组的语法
 
+    第一种形式：直接使用类名
+
     ```
-    // 第一种形式：直接使用类名
     .class{}
     .class1{}
     <div v-bind:class="['class','class1']">X</div>
     ```
 
+    第二种形式：使用数据
+
     ```
-    // 第二种形式：使用数据
     .class{}
     .class1{}
     <div v-bind:class="[class,class1]">X</div>
@@ -305,8 +304,9 @@ v-bind:class 可以与普通的class属性共存
     }
     ```
 
+    第三种形式：使用三元表达式
+
     ```
-    // 第三种形式：使用三元表达式
     .class{}
     .class1{}
     <div v-bind:class="[class,isActive?class1:'']">X</div>
@@ -317,10 +317,13 @@ v-bind:class 可以与普通的class属性共存
     }
     ```
 
+    第四种形式：数组中使用对象语法
+    
+    此时对象的属性为类名，可带引号也可不带引号
+    
+    对象的值为数据标识符
+
     ```
-    // 第四种形式：数组中使用对象语法
-    // 此时对象的属性为类名，可带引号也可不带引号
-    // 对象的值为数据标识符
     .class{}
     .class1{}
     <div v-bind:class="[class,{class1:isActive}]">X</div>
