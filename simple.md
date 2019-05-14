@@ -23,9 +23,11 @@ vm实例就只能处理挂载点下的内容
 <div id="app"></div>
 ```
 
+绑定挂载点，值为选择器
+
 ```
 var vm = new Vue({
-  el: "#app", // 绑定挂载点，值为选择器
+  el: "#app"
 })
 ```
 
@@ -52,7 +54,7 @@ data: function () {
 ES6的函数写法
 
 ```
-data () {
+data() {
   return {
     content: 'Hello Vue'
   }
