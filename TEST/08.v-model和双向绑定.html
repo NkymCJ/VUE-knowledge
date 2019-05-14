@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div v-cloak id="app">
+            <h2>文本</h2>
+            <input type="text" v-model="value">
+            <p>{{value}}</p>
+            <h2>多行文本</h2>
+            <textarea type="text" v-model="value1"></textarea>
+            <p>{{value1}}</p>
+            <h2>复选框</h2>
+            <input type="checkbox" v-model="checked">
+            <p>{{checked}}</p>
+            <input type="checkbox" value="0" v-model="checked1" name="checked1">
+            <input type="checkbox" value="1" v-model="checked1" name="checked1">
+            <input type="checkbox" value="2" v-model="checked1" name="checked1">
+            <input type="checkbox" value="3" v-model="checked1" name="checked1">
+            <p>{{checked1}}</p>
+            <h2>单选框</h2>
+            <input type="radio" v-model="picked" value="One">
+            <input type="radio" v-model="picked" value="Two">
+            <p>{{picked}}</p>
+            <h2>选择框</h2>
+            <select v-model="select">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+            <p>{{select}}</p>
+            <select multiple v-model="select1">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+            <p>{{select1}}</p>
+        </div>
+
+        <script src="/lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        value: "",
+                        value1: "",
+                        checked: false,
+                        checked1: [],
+                        picked: "",
+                        select: "0",
+                        select1: [],
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

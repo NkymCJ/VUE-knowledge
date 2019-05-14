@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div v-cloak id="app">
+            <input type="button" @click="go" value="GO">
+            <input type="button" @click="stop" value="STOP">
+            <h2>{{content}}</h2>
+        </div>
+
+        <script src="/lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        content: "Hello",
+                        timer: null
+                    }
+                },
+                methods: {
+                    go() {
+                        if (this.timer != null) {
+                            return;
+                        }
+                        this.timer = setInterval(() => {
+                            var start = this.content.substring(0, 1);
+                            var end = this.content.substring(1);
+                            this.content = end + start;
+                        }, 100);
+                    },
+                    stop() {
+                        clearInterval(this.timer);
+                        this.timer = null;
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

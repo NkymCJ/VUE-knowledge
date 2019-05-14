@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <!-- 使用v-cloak能够解决插值表达式闪烁的问题 -->
+            <p v-cloak>{{content}}</p>
+            <!-- v-text与v-html没有闪烁问题，但是会替换内部所有内容 -->
+            <p v-text="content"></p>
+            <p v-html="content"></p>
+
+            <!-- v-html会对字符串进行转义 -->
+            <p v-cloak>{{contentDiv}}</p>
+            <p v-text="contentDiv"></p>
+            <p v-html="contentDiv"></p>
+        </div>
+
+        <script src="/lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data: {
+                    content: "Hello World",
+                    contentDiv: "<h1>H1</h1>"
+                }
+            });
+        </script>
+    </body>
+
+</html>

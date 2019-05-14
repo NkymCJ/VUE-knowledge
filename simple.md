@@ -2,20 +2,22 @@
 
 VUE 学习
 
+当我们导入包之后，在浏览器内存中，就多了一个Vue构造函数
+
 ### 语法
 
 1. 实例
     
-    var vm = new Vue({}) //创建实例vm
+    var vm = new Vue({}) // 创建实例vm
 
 2. 挂载点
 
     **挂载点不能是 body**
 
     ```
-    <div id="dot"></div> //挂载点
-    var vm = new Vue({ //实例只能处理挂载点下的内容
-        el: "#dot", //绑定挂载点，选择器
+    <div id="app"></div> // 挂载点
+    var vm = new Vue({ // 实例只能处理挂载点下的内容
+      el: "#app", // 绑定挂载点，选择器
     })
     ```
 
@@ -23,20 +25,18 @@ VUE 学习
 
     ```
     // 一般写法 
-    data : {
+    data: {
       content: "Hello World"
     }
-
     // 函数写法(以维护一份被返回对象的独立的拷贝)
-    data : function(){
-      return{
+    data: function () {
+      return {
         content: 'Hello World'
       }
     }
-
-    // ES6写法
-    data(){
-      return{
+    // ES6的函数写法
+    data () {
+      return {
         content: 'Hello World'
       }
     }
@@ -49,37 +49,58 @@ VUE 学习
     <div v-text="content"></div>
     <div v-html="content"></div>
     ```
-    比较：
     
-    | 类型 | 共同点 | 闪烁问题  | 转义问题 |
-    | :---: | :---: | :---: | :---: | :---: |
-    | {{}} | 显示数据 | 有 | 不转义 |
-    | v-text | 显示数据 | 无 | 不转义 |
-    | v-html | 显示数据 | 无 | 转义 |
-
-    **使用v-cloak(1.添加属性：v-cloak；2.添加样式：[v-cloak]{display:none;})解决闪烁问题，有必要时使用 !important**
+    | 类型 | 闪烁问题  | 替换问题 | 转义问题 |
+    | :--- | :--- | :--- | :--- |
+    | {{}} | 有 | 只替换插值表达式 | 不转义 |
+    | v-text | 无 | 替换内部所有内容 | 不转义 |
+    | v-html | 无 | 替换内部所有内容 | 转义 |
 
 5. 计算属性
 
-    在 **computed** 中可以定义一些属性，这些属性叫做计算属性。它的本质是一个方法， 只不过在使用的时候，直接把它们的名称当作属性来使用，而不是把它们当作方法去调用
+    模板内的插值表达式非常便利，可以用于简单运算，但是放入太多逻辑会让模板过重且难以维护，例如：```{{ message.split('').reverse().join('') }}```
 
-    **引用的时候一定不要加 () 去调用**
+    所以对于复杂逻辑，要另辟蹊径：计算属性、侦听器、方法
 
-    **计算属性内部所用到的任何 data 中的数据发生变化，就会立即重新计算该值**
+    在computed属性中可以定义一些属性，这些属性叫做计算属性。它们的本质是一个方法，只不过在使用的时候，直接把它们的名称当作属性来使用，而不是把它们当作方法去调用，使用的时候一定不要加()
 
-    **计算属性的求值结果会被保存起来，方便下次直接使用，若无发生变化，则不会重新对其求值**
+    使用方法
+
+    默认GETTER
+
+    ```
+    fullName() {
+      return this.firstName + " " + this.lastName;
+    }
+    ```
+
+    GETTER 和 SETTER
+
+    ```
+    fullName: {
+      get() {
+        return this.firstName + " " + this.lastName;
+      },
+      set(newValue) {
+        var names = newValue.split(' ');
+        this.firstName = names[0];
+        this.lastName = names[1];
+      }
+    }
+    ```
 
     示例
 
     ```
-    <!-- HTML -->
+    // vm挂载点下
     <div id="app">
         <input type="text" v-model="firstname"> +
         <input type="text" v-model="lastname"> =
         <input type="text" v-model="fullname">
     </div>
+    ```
 
-    <!-- SCRIPT -->
+    ```
     var vm = new Vue({
         el: "#app",
         data() {
@@ -88,6 +109,7 @@ VUE 学习
                 lastname: ''
             }
         },
+        // vm的computed属性里面定义fullname计算属性
         computed: {
             fullname(){
                 return this.firstname + '-' + this.lastname;
@@ -95,53 +117,134 @@ VUE 学习
         }
     })
     ```
-
-6. 绑定属性
-
-    v-bind:属性名，简写为 :属性名
+    
+    在插值表达式中调用方法也可以达到同样的效果，例如
 
     ```
-    <div :title="content == 'Hello World'? content: ''">{{content}}</div>
+    {{fullName()}}
     ```
 
-    **v-bind的绑定的值为 JS表达式，可以进行简单的操作**
-
-7. 绑定事件
-
-    v-on:事件，简写为 @:事件
-
     ```
-    // 挂载点下
-    <button id="button" @click="show">button</button>
-
-    // 实例的 methods 属性里
-    show:function(event) {
-      // this 指向当前 vue 实例
-      console.log(this.content);
-
-      // event 是原生 DOM 事件
-      if(event){
-        console.log(event.target.id);
+    methods: {
+      fullName() {
+        return this.firstname + '-' + this.lastname;
       }
     }
     ```
 
-    **获取实例 data 的数据或调用 methods 的方法：this.数据属性名 或 this.方法名来访问(this指向new出来的实例)**
+    但是不同的是计算属性是基于它们的响应式依赖进行缓存的，只在相关响应式依赖发生改变时它们才会重新求值，说简单点，就是：计算属性内部所用到的任何data中的数据发生变化时，才会立即重新计算该值。计算属性的求值结果会被缓存起来，方便下次直接使用，若无发生变化，则不会重新对其求值
+
+    使用计算属性可以减少不必要的开销
+
+6. 绑定属性
+
+    v-bind:属性名，可以简写为:属性名
+    
+    v-bind中可以写合法的JS表达式，进行简单的操作
+
+    ```
+    <div :title="content">{{content}}</div>
+
+    <div :title="content + '123'">{{content}}</div>
+
+    <div :title="content == 'Hello World'? content : ''">{{content}}</div>
+    ```
+
+7. 事件
+
+    补充:获取vm的data里数据或调用methods的方法:this.数据属性名或this.方法名来访问(this指向new出来的实例vm)
+
+    v-on:事件，可以简写为@:事件
+
+    - 可以用v-on指令监听DOM事件，并在触发时运行一些JS代码
+
+      ```
+      // vm挂载点下
+      <button v-on:click="counter += 1">Add 1</button>
+      <p>{{counter}}</p>
+      ```
+
+      ```
+      // vm的data属性里面定义content
+      data: {
+        counter: 0
+      }
+      ```
+
+    - 事件处理方法
+
+      默认传递event对象
+
+      ```
+      // vm挂载点下
+      <button id="button" @click="show">button</button>
+      ```
+
+      ```
+      // vm的methods属性里面定义show
+      show: function (event) {
+        // this指向当前vue实例
+        console.log(this.content);
+        // event是原生DOM事件
+        if (event) {
+          console.log(event.target.id);
+        }
+      }
+      ```
+
+      ```
+      // 外部也可以直接调用方法
+      vm.show();
+      ```
+
+    - 事件参数
+
+      当有其他参数时，需要event对象可以使用$event获取
+
+      ```
+      // vm挂载点下
+      <div id="parent" @click="show('Hello Parent',$event)">
+        <div id="child" @click="show('Hello Child',$event)"></div>
+      </div>
+      ```
+
+      ```
+      // vm的methods属性里面定义show
+      show: function (message, event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        console.log(message);
+      }
+      ```
 
 8. 事件修饰符
 
     - .stop 阻止冒泡
+
     - .prevent 阻止默认事件
-    - .capture 实现捕获事件
+
+    - .capture 捕获时触发
+
     - .self 只有点击当前元素才会触发
+
     - .once 只触发一次
+
     - .passive 告诉浏览器不阻止事件的默认行为
 
 9. 双向绑定
 
-    v-model:属性
+    v-model:属性，只能运用在表单元素中
 
-    **只能运用在表单元素中**
+    v-model会忽略所有表单元素的value、checked、selected特性的初始值而总是将vm示例的数据作为数据来源
+
+    v-model在内部为不同的输入元素使用不同的属性并抛出不同的事件
+
+    - text和textarea元素使用value属性和input事件
+
+    - checkbox和radio元素使用checked属性和change事件
+
+    - select将value作为prop并将change作为事件
 
 10. 绑定class
 
@@ -300,7 +403,7 @@ VUE 学习
     **PS: 注意事项**
 
     每次循环时，使用 key 标识当前项的唯一身份
-    - key 绑定的属性智能是 number 或 string 类型
+    - key 绑定的属性只能是 number 或 string 类型
     - key 需要使用 v-bind 绑定，即 v-bind:key
 
 13. v-if / v-show

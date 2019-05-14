@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+
+            #parent {
+                height: 200px;
+                width: 200px;
+                background-color: #ccc;
+            }
+
+            #child {
+                height: 100px;
+                width: 100px;
+                background-color: #aaa;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div v-cloak id="app">
+            <input id="btn" type="button" value="Add 1" @click="content += 1">
+            <span>{{content}}</span>
+        </div>
+        <div id="app2">
+            <input id="btn" type="button" value="Say" @click="say">
+        </div>
+        <div id="app3">
+            <div id="parent" @click="say('Hello Parent',$event)">
+                <div id="child" @click="say('Hello Child',$event)"></div>
+            </div>
+        </div>
+        <script src="/lib/vue.js"></script>
+        <script>
+            // 1. JS代码
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        content: 0
+                    }
+                }
+            });
+            // 2. 事件处理方法
+            var vm2 = new Vue({
+                el: "#app2",
+                data() {
+                    return {
+                        content: "Hello World"
+                    }
+                },
+                methods: {
+                    say: function (event) {
+                        console.log(this.content);
+                        if (event) {
+                            console.log(event.target.id)
+                        }
+                    }
+                }
+            });
+            vm2.say();
+            // 3. 事件参数
+            var vm3 = new Vue({
+                el: "#app3",
+                methods: {
+                    say: function (message, event) {
+                        if (event) {
+                            event.stopPropagation();
+                        }
+                        console.log(message);
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

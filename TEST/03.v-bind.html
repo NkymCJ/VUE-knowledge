@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div v-cloak id="app">
+            <input type="button" value="BTN" :title="title">
+            <input type="button" value="BTN" :title="title + '123'">
+            <input type="button" value="BTN" :title="title == '123'? 'YES' : 'NO'">
+        </div>
+
+        <script src="/lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        title: "BTN"
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

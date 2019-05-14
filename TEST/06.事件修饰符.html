@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+
+            .parent {
+                width: 200px;
+                height: 200px;
+                background-color: #ccc;
+            }
+
+            .child {
+                width: 100px;
+                height: 100px;
+                background-color: #aaa;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div v-cloak id="app">
+            <h2>.stop</h2>
+            <div class="parent" @click="say('parent click')">
+                <div class="child" @click.stop="say('child click')"></div>
+            </div>
+            <h2>.prevent</h2>
+            <a href="http://www.baidu.com" @click.prevent="say('www.baidu.com')">www.baidu.com</a>
+            <h2>.capture</h2>
+            <div class="parent" @click.capture="say('parent click')">
+                <div class="child" @click="say('child click')"></div>
+            </div>
+            <h2>.self</h2>
+            <div class="parent" @click.self="say('parent click')">
+                <div class="child" @click="say('child click')"></div>
+            </div>
+            <h2>.once</h2>
+            <input type="button" value="ONCE" @click.once="say('ONCE')">    
+            <h2>.passive</h2>
+            略
+        </div>
+
+        <script src="/lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+                    say(value) {
+                        console.log(value);
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

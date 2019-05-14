@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <!-- Vue实例所控制的这个元素区域，就是MVVM中的V -->
+        <div id="app">
+            {{content}}
+        </div>
+
+        <script src="/lib/vue.js"></script>
+        <script>
+            // new出来的vm对象，就是MVVM中的VM
+            var vm = new Vue({
+                el: "#app", // 挂载点
+                // data属性的数据，就是MVVM中的M
+                data: {
+                    content: "Hello World"
+                }
+            });
+        </script>
+    </body>
+
+</html>
