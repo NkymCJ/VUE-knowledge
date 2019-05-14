@@ -79,7 +79,11 @@ data() {
 
 VUE会在插值表达式替换完成时清除此样式
 
-```[v-cloak]{display:none !important;}```
+```
+[v-cloak] {
+  display:none !important;
+}
+```
 
 ## 计算属性
 
