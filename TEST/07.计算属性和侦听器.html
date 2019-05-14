@@ -17,6 +17,7 @@
         <div v-cloak id="app">
             <input type="text" v-model="firstName">
             <input type="text" v-model="lastName">
+            <!-- <p>{{fullName}}</p> -->
             <input type="text" v-model="fullName">
         </div>
 
@@ -31,6 +32,9 @@
                     }
                 },
                 computed: {
+                    // fullName(){
+                    //     return this.firstName + ' ' + this.lastName;
+                    // }
                     fullName: {
                         get() {
                             return this.firstName + ' ' + this.lastName;
