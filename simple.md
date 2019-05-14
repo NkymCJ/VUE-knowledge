@@ -27,7 +27,7 @@ var vm = new Vue({
 
 ## 设置数据
 
-一般写法：
+### 一般写法
 
 ```
 data: {
@@ -35,7 +35,7 @@ data: {
 }
 ```
 
-函数写法(以维护一份被返回对象的独立的拷贝)：
+### 函数写法(以维护一份被返回对象的独立的拷贝)
 
 ```
 data: function () {
@@ -45,7 +45,7 @@ data: function () {
 }
 ```
 
-ES6的函数写法：
+### ES6的函数写法
 
 ```
 data() {
@@ -89,7 +89,7 @@ VUE会在插值表达式替换完成时清除此样式。
 
 可以在computed属性中可以定义一些属性，这些属性叫做计算属性。它们的本质是一个方法，只不过在使用的时候，直接把它们的名称当作属性来使用，而不是把它们当作方法去调用，使用的时候一定不要加()。
 
-使用方法：
+### 使用方法
 
 1. 默认GETTER
 
@@ -116,7 +116,7 @@ VUE会在插值表达式替换完成时清除此样式。
     }
     ```
 
-使用示例：
+### 使用示例
 
 ```
 <div id="app">
@@ -144,7 +144,9 @@ var vm = new Vue({
     }
 })
 ```
-    
+
+### 计算属性与方法的差异
+
 在插值表达式中调用方法也可以达到同样的效果，例如：
 
 ```{{fullName()}}```
@@ -179,7 +181,7 @@ v-on:事件，可以简写为@:事件。
 
 (补充) 获取vm的data里数据或调用methods的方法：this.数据属性名或this.方法名来访问(this指向new出来的实例vm)。
 
-绑定事件：
+### 绑定事件
 
 1. 可以用v-on指令监听DOM事件，并在触发时运行一些JS代码
 
@@ -277,9 +279,9 @@ v-bind:class 可以与普通的class属性共存：
 
 总结：只要是对象形式的，对象的属性名是类名，不管加不加引号，对象的值才是数据标识符；不是对象形式的，加引号是类名，不加则是数据标识符。
 
-1. 使用数组的语法
+### 使用数组的语法
 
-    第一种形式：直接使用类名
+1. 直接使用类名
 
     ```
     .class{}
@@ -287,7 +289,7 @@ v-bind:class 可以与普通的class属性共存：
     <div v-bind:class="['class','class1']">X</div>
     ```
 
-    第二种形式：使用数据
+2. 使用数据
 
     ```
     .class{}
@@ -299,7 +301,7 @@ v-bind:class 可以与普通的class属性共存：
     }
     ```
 
-    第三种形式：使用三元表达式
+3. 使用三元表达式
 
     ```
     .class{}
@@ -312,11 +314,9 @@ v-bind:class 可以与普通的class属性共存：
     }
     ```
 
-    第四种形式：数组中使用对象语法
-    
-    此时对象的属性为类名，可带引号也可不带引号。
-    
-    对象的值为数据标识符。
+4. 数组中使用对象语法
+
+    此时对象的属性为类名，可带引号也可不带引号；对象的值为数据标识符。
 
     ```
     .class{}
@@ -329,30 +329,28 @@ v-bind:class 可以与普通的class属性共存：
     }
     ```
       
-2. 使用对象的语法
+### 使用对象的语法
 
-    对象的属性为类名，可带引号也可不带引号。
+对象的属性为类名，可带引号也可不带引号；对象的值为数据标识符。
 
-    对象的值为数据标识符。
+```
+.class{}
+.class1{}
+<div v-bind:class="{class:isClassActive,class1:isClass1Active}">X</div>
+data:{
+  isClassActive:true,
+  isClass1Active:false
+}
+```
 
-    ```
-    .class{}
-    .class1{}
-    <div v-bind:class="{class:isClassActive,class1:isClass1Active}">X</div>
-    data:{
-      isClassActive:true,
-      isClass1Active:false
-    }
-    ```
-
-    ```
-    .class{}
-    .class1{}
-    <div v-bind:class="class2">X</div>
-    data:{
-      class2:{class:true,class1:true}
-    }
-    ```
+```
+.class{}
+.class1{}
+<div v-bind:class="class2">X</div>
+data:{
+  class2:{class:true,class1:true}
+}
+```
 
 ## 绑定style
 
@@ -364,32 +362,32 @@ v-bind:class 可以与普通的class属性共存。
 <div style="margin-left:10px;" v-bind:style="color:'red'"></div>
 ```
 
-1. 使用对象的语法
+### 使用对象的语法
 
-    此时对象的属性名为CSS属性名，使用驼峰式或用单引号括起来的短横线分割来命名。
+此时对象的属性名为CSS属性名，使用驼峰式或用单引号括起来的短横线分割来命名。
 
-    ```
-    <div v-bind:style="{color:'red','font-weight':550}">x</div>
-    <div v-bind:style="{color:'red',fontWeight:550}">x</div>
-    <div v-bind:style="styleList">x</div>
-    <div v-bind:style="styleList1">x</div>
-    data:{
-      styleList:{color:'red','font-weight':550}
-      styleList1:{color:'red',fontWeight:550}
-    }
-    ```
+```
+<div v-bind:style="{color:'red','font-weight':550}">x</div>
+<div v-bind:style="{color:'red',fontWeight:550}">x</div>
+<div v-bind:style="styleList">x</div>
+<div v-bind:style="styleList1">x</div>
+data:{
+  styleList:{color:'red','font-weight':550}
+  styleList1:{color:'red',fontWeight:550}
+}
+```
 
-2. 使用数组的语法
+### 使用数组的语法
 
-    将多个样式对象应用到同一个元素上。
+将多个样式对象应用到同一个元素上。
 
-    ```
-    <div v-bind:style="[styleList,styleList1]">x</div>
-    data:{
-      styleList:{color:'red',fontWeight:550},
-      styleList1:{backgroundColor:'deepskyblue',height:'150px'}
-    }
-    ```
+```
+<div v-bind:style="[styleList,styleList1]">x</div>
+data:{
+  styleList:{color:'red',fontWeight:550},
+  styleList1:{backgroundColor:'deepskyblue',height:'150px'}
+}
+```
 
 ## v-for指令
 
