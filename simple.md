@@ -58,7 +58,9 @@ VUE 学习
 
 5. 计算属性
 
-    模板内的插值表达式非常便利，可以用于简单运算，但是放入太多逻辑会让模板过重且难以维护，例如：```{{ message.split('').reverse().join('') }}```
+    模板内的插值表达式非常便利，可以用于简单运算，但是放入太多逻辑会让模板过重且难以维护，例如：
+
+    ```{{ message.split('').reverse().join('') }}```
 
     所以对于复杂逻辑，要另辟蹊径：计算属性、侦听器、方法
 
@@ -248,84 +250,87 @@ VUE 学习
 
 10. 绑定class
 
-    v-bind:属性名，简写为 :属性名
+    v-bind:属性名，简写为:属性名
 
-    **v-bind:class 可以与普通的class属性共存**
+    v-bind:class 可以与普通的class属性共存
 
     ```
     <div class="static" v-bind:class="dynamic"></div>
     ```
         
-    - 语法
+
+    使用数组的语法
 
       ```
-      // 使用数组的语法
-
-      // 普通模式0
-      // DOM
+      // 第一种形式：直接使用类名
+      // 样式表
+      .class0{}
+      .class1{}
+      // HTML
       <div v-bind:class="['class0','class1']">X</div>
-      // 样式表
+      
+      // 第二种形式：使用数据
+      // 样式
       .class0{}
       .class1{}
-
-      // 普通模式1
-      // DOM
+      // HTML
       <div v-bind:class="[class0,class1]">X</div>
-      // 样式表
-      .class0{}
-      .class1{}
       // 实例中的data
       data:{
         class0:'class0',
         class1:'class1'
       }
 
-      // 使用三元表达式
-      // DOM
+      // 第三种形式：使用三元表达式
+      // 样式
+      .class0{}
+      .class1{}
+      // HTML
       <div v-bind:class="[class0,isActive?class1:'']">X</div>
-      // 样式表
-      .class0{}
-      .class1{}
       // 实例中的data
-      data:{
-        class0:'class0',
-        class1:'class1',
-        isActive:true
+      data: {
+        class0: 'class0',
+        class1: 'class1',
+        isActive: true
       }
 
-      // 数组中使用对象语法
-      // DOM
+      // 第四种形式：数组中使用对象语法
+      // 样式
+      .class0{}
+      .class1{}
+      // HTML
       <div v-bind:class="[class0,{class1:isActive}]">X</div>
-      // 样式表
-      .class0{}
-      .class1{}
       // 实例中的data
       data:{
         class0:'class0',
         class1:'class1',
         isActive:true
       }
+      ```
+      
+      使用对象的语法
 
-      // 使用对象的语法
-      // 此时对象的属性为类名，可带引号也可不带引号
-      // 此时对象的值为标识符
+      此时对象的属性为类名，可带引号也可不带引号
 
-      // DOM
-      <div v-bind:class="{class0:isClass0Active,class1:isClass1Active}">X</div>
-      // 样式表
+      此时对象的值为标识符
+
+      ```
+      // 样式
       .class0{}
       .class1{}
+      // HTML
+      <div v-bind:class="{class0:isClass0Active,class1:isClass1Active}">X</div>
       // 实例中的data
       data:{
         isClass0Active:true,
         isClass1Active:false
       }
 
-      // DOM
-      <div v-bind:class="class2">X</div>
-      // 样式表
+      // 样式
       .class0{}
       .class1{}
+      // HTML
+      <div v-bind:class="class2">X</div>
       // 实例中的data
       data:{
         class2:{class0:true,class1:true}
