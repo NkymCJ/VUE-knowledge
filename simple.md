@@ -2,12 +2,11 @@
 
 VUE 学习
 
-当我们导入VUE脚本之后，在浏览器内存中，就多了一个Vue构造函数
+当我们导入VUE脚本之后，在浏览器内存中，就多了一个Vue构造函数。
 
 ## 实例
 
 创建vm实例：```var vm = new Vue({});```
-
 
 ## 挂载点
 
@@ -45,7 +44,7 @@ data: function () {
 }
 ```
 
-#### ES6的函数写法
+#### ES6简写
 
 ```
 data() {
@@ -391,45 +390,67 @@ data:{
 
 ## v-for指令
 
-    - 遍历数组 v-for="(item,index) in items"
+#### 遍历数组 
 
-      ```
-      // DOM
-      <p v-for="(item,index) in List0">{{index}}-{{item}}></p>
-      // 实例中的data
-      data:{
-        List0:['00','11','22','33','44','55','66']
-      }
-      ```
+```v-for="item in items"```
 
-    - 迭代对象属性 v-for="(value,key,index) in obj"
+```v-for="(item,index) in items"```
 
-      ```
-      // DOM
-      <p v-for="(value,key,index) in obj">{{index}}-{{key}}-{{value}}></p>
-      // 实例中的data
-      data:{
-        obj:{
-            name:'Rex',
-            age:23
-        }
-      }
-      ```
+items是数据数组，item是数组元素迭代的别名，index为当前项的索引。
 
-    - 取值范围重复 v-for="count in 10"
+也可以用of替代in作为分隔符。
 
-      ```
-      // DOM
-      <p v-for="count in 10">{{count}}</p>
-      ```
+```
+<p v-for="(item,index) in items">{{index}}-{{item}}></p>
+```
 
-    **PS: 注意事项**
+```
+data:{
+  items:['00','11','22','33','44','55','66']
+}
+```
 
-    每次循环时，使用 key 标识当前项的唯一身份
-    - key 绑定的属性只能是 number 或 string 类型
-    - key 需要使用 v-bind 绑定，即 v-bind:key
+#### 迭代对象属性
 
-13. v-if / v-show
+```v-for="value in obj"```
+
+```v-for="(value,key) in obj"```
+
+```v-for="(value,key,index) in obj"```
+
+value为键值，key为键名，index为索引。
+
+在遍历对象时，是按Object.keys()的结果遍历，但是不能保证它的结果在不同的JavaScript引擎下是一致的。
+
+```
+<p v-for="(value,key,index) in obj">{{index}}-{{key}}-{{value}}></p>
+```
+
+```
+data:{
+  obj:{
+      name:'CJ',
+      age:25
+  }
+}
+```
+
+#### 取值范围重复
+
+v-for="count in 10"
+
+```
+<p v-for="count in 10">{{count}}</p>
+```
+
+#### KEY
+
+每次循环时，使用 key 标识当前项的唯一身份
+
+1. key 绑定的属性只能是 number 或 string 类型
+2. key 需要使用 v-bind 绑定，即 v-bind:key
+
+## v-if / v-show
 
     - v-if 每次都会重新删除或创建元素，切换耗性能
     - v-show 只是切换元素的 display 样式，初始耗性能
