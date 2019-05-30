@@ -10,13 +10,16 @@ VUE 学习
 
 ## 挂载点
 
-vm实例只能处理挂载点下的内容。
+挂载点不能是body，vm实例只能处理挂载点下的内容。
 
-挂载点不能是body。
+绑定挂载点的值为选择器。
 
-```<div id="app"></div>```
+示例：
 
-绑定挂载点，值为选择器。
+```
+<div id="app"></div>
+
+```
 
 ```
 var vm = new Vue({
@@ -68,7 +71,11 @@ data() {
 | v-text | 无 | 替换内部所有内容 | 不转义 |
 | v-html | 无 | 替换内部所有内容 | 转义 |
 
-解决闪烁问题：添加v-cloak样式。
+解决插值表达式的闪烁问题：添加v-cloak样式。
+
+VUE会在插值表达式替换完成时清除此样式。
+
+v-cloak样式定义如下：（!important 看情况加）
 
 ```
 [v-cloak] {
@@ -76,15 +83,13 @@ data() {
 }
 ```
 
-VUE会在插值表达式替换完成时清除此样式。
-
 ## 计算属性
 
 模板内的插值表达式非常便利，可以用于简单运算，但是放入太多逻辑会让模板过重且难以维护，例如下面这个插值表达式：
 
 ```{{ message.split('').reverse().join('') }}```
 
-所以对于复杂逻辑，要另辟蹊径：使用计算属性、侦听器、方法。
+所以对于复杂逻辑，要另辟蹊径。可以使用计算属性、侦听器、方法。
 
 可以在computed属性中可以定义一些属性，这些属性叫做计算属性。它们的本质是一个方法，只不过在使用的时候，直接把它们的名称当作属性来使用，而不是把它们当作方法去调用，使用的时候一定不要加()。
 
@@ -92,7 +97,7 @@ VUE会在插值表达式替换完成时清除此样式。
 
 1. 默认GETTER
 
-    这种形式只创建了GETTER，SET时会报错。
+    这种形式只创建了GETTER，如果进行SET的话会报错。
 
     ```
     fullName() {
@@ -115,44 +120,51 @@ VUE会在插值表达式替换完成时清除此样式。
     }
     ```
 
-#### 使用示例
+3. 完整示例
 
-```
-<div id="app">
-    <input type="text" v-model="firstName"> +
-    <input type="text" v-model="lastName"> =
-    <p>{{fullName}}</p>
-</div>
-```
+    ```
+    <div id="app">
+        <input type="text" v-model="firstName"> +
+        <input type="text" v-model="lastName"> =
+        <div>{{fullName}}</div>
+    </div>
+    ```
 
-```
-var vm = new Vue({
-    el: "#app",
-    data() {
-        return {
-            firstName: '',
-            lastName: ''
+    ```
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                firstName: '',
+                lastName: ''
+            }
+        },
+        computed: {
+            fullName: {
+                get() {
+                  return this.firstName + ' ' + this.lastName;
+                },
+                set(newValue) {
+                  var name = newValue.split(',');
+                  this.firstName = name[0];
+                  this.lastName = name[1];
+                }
+            }
         }
-    },
-    // vm的computed属性里面定义fullName计算属性
-    // 此示例因为fullName只是获取展示，所以不需要SETTER
-    computed: {
-        fullName(){
-            return this.firstName + ' ' + this.lastName;
-        }
-    }
-})
-```
+    })
+    ```
 
 #### 计算属性与方法的差异
 
 在插值表达式中调用方法也可以达到同样的效果，例如：
 
-```{{fullName()}}```
+```
+{{getfullName()}}
+```
 
 ```
 methods: {
-  fullName() {
+  getfullName() {
     return this.firstName + ' ' + this.lastName;
   }
 }
@@ -161,6 +173,34 @@ methods: {
 但是不同的是计算属性是基于它们的响应式依赖进行缓存的，只在相关响应式依赖发生改变时它们才会重新求值，说简单点，就是：计算属性内部所用到的任何data中的数据发生变化时，才会立即重新计算该值。计算属性的求值结果会被缓存起来，方便下次直接使用，若无发生变化，则不会重新对其求值。
 
 使用计算属性可以减少不必要的开销。
+
+#### 计算属性与侦听器的差异
+
+使用侦听器也可以达到同样的效果，例如：
+
+```
+{{firstName}} + {{lastName}} = {{fullName}}
+```
+
+```
+data() {
+  return {
+    firstName: '',
+    lastName: '',
+    fullName: ''
+  }
+},
+watch: {
+  firstName(newVal, oldVal) {
+    this.fullName = newVal + ' ' + this.lastName;
+  },
+  lastName(newVal, oldVal) {
+    this.fullName = this.firstName + ' ' + newVal;
+  }
+}
+```
+
+计算属性与侦听器各有各的好处。
 
 ## 绑定属性
 
