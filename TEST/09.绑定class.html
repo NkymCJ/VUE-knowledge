@@ -27,13 +27,13 @@
             <div :class="['gray','bold']">Hello World</div>
             <div :class="[d_gray,d_bold]">Hello World</div>
             <div :class="[d_gray,needBold?d_bold:'']">Hello World</div>
-            <div :class="[d_gray,{'bold':needBold1}]">Hello World</div>
+            <div :class="[d_gray,{bold:needBold1}]">Hello World</div>
             <h2>使用对象的语法</h2>
             <div :class="{bold:needBold2}">Hello World</div>
             <div :class="d">Hello World</div>
         </div>
 
-        <script src="/lib/vue.js"></script>
+        <script src="./lib/vue.js"></script>
         <script>
             var vm = new Vue({
                 el: "#app",

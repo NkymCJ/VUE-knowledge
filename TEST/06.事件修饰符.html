@@ -42,12 +42,10 @@
                 <div class="child" @click="say('child click')"></div>
             </div>
             <h2>.once</h2>
-            <input type="button" value="ONCE" @click.once="say('ONCE')">    
-            <h2>.passive</h2>
-            略
+            <input type="button" value="ONCE" @click.once="say('ONCE')">
         </div>
 
-        <script src="/lib/vue.js"></script>
+        <script src="./lib/vue.js"></script>
         <script>
             var vm = new Vue({
                 el: "#app",

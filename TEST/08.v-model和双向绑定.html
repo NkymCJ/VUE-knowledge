@@ -17,6 +17,9 @@
         <div v-cloak id="app">
             <h2>文本</h2>
             <input type="text" v-model="value">
+            <input type="text" v-model.lazy="value">
+            <input type="text" v-model.trim="value">
+            <input type="text" v-model.number="value">
             <p>{{value}}</p>
             <h2>多行文本</h2>
             <textarea type="text" v-model="value1"></textarea>
@@ -48,7 +51,7 @@
             <p>{{select1}}</p>
         </div>
 
-        <script src="/lib/vue.js"></script>
+        <script src="./lib/vue.js"></script>
         <script>
             var vm = new Vue({
                 el: "#app",

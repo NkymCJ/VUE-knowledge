@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+
+            .box1 {
+                height: 300px;
+                width: 300px;
+                background-color: #aaa;
+            }
+
+            .box2 {
+                display: inline-block;
+                height: 200px;
+                width: 200px;
+                background-color: #bbb;
+            }
+
+            .box3 {
+                height: 100px;
+                width: 100px;
+                background-color: #ccc;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>点击box3看事件修饰符串联顺序不同产生的效果</h1>
+        <h2>补充：</h2>
+        <h2>a标签的href和click的执行顺序：click > href</h2>
+        <div v-cloak id="app">
+            <div class="box1" @click="sayHi(1)">
+                <a class="box2" href="/#" @click.prevent.self="sayHi(2)">
+                    <div class="box3" @click="sayHi(3)"></div>
+                </a>
+            </div>
+        </div>
+        <h3>可以发现：</h3>
+        <h3>点击box3，执行sayHi(3)，打印“Hello 3”，然后事件冒泡到box2，</h3>
+        <h3>首先阻止了默认事件，然后再判断是否是自身，发现不是，不会执行sayHi(2)，打印“Hello 2”，</h3>
+        <h3>然后事件冒泡到box1，执行sayHi(1)，打印“Hello 1”。</h3>
+        <div v-cloak id="app2">
+            <div class="box1" @click="sayHi(1)">
+                <a class="box2" href="/#" @click.self.prevent="sayHi(2)">
+                    <div class="box3" @click="sayHi(3)"></div>
+                </a>
+            </div>
+        </div>
+        <h3>可以发现：</h3>
+        <h3>点击box3，执行sayHi(3)，打印“Hello 3”，然后事件冒泡到box2，</h3>
+        <h3>首先判断是否是自身，发现不是自身，所以不会继续走下去，</h3>
+        <h3>即不会阻止默认事件，也不会执行sayHi(2)，不会打印“Hello 2”，</h3>
+        <h3>然后事件冒泡到box1，执行sayHi(1)，打印“Hello 1”，</h3>
+        <h3>然后当都click完是，此时box2的默认事件触发，跳转到/#。</h3>
+        <script src="./lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                methods: {
+                    sayHi(n) {
+                        alert('Hello ' + n);
+                    }
+                }
+            });
+            var vm2 = new Vue({
+                el: "#app2",
+                methods: {
+                    sayHi(n) {
+                        alert('Hello ' + n);
+                    }
+                }
+            })
+        </script>
+    </body>
+
+</html>

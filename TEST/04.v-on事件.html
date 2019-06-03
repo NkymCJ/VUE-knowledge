@@ -26,19 +26,22 @@
     </head>
 
     <body>
+        第1种：on绑定的属性值里面写表达式 @click="content += 1"
         <div v-cloak id="app">
             <input id="btn" type="button" value="Add 1" @click="content += 1">
             <span>{{content}}</span>
         </div>
-        <div id="app2">
+        第2种：on绑定的属性值为vue实例的方法，默认传递event事件对象 @click="say"
+        <div v-cloak id="app2">
             <input id="btn" type="button" value="Say" @click="say">
         </div>
-        <div id="app3">
+        第3种：on绑定的属性值为vue实例的方法，通过$event传递事件对象 @click="say('xxx',$event)"
+        <div v-cloak id="app3">
             <div id="parent" @click="say('Hello Parent',$event)">
                 <div id="child" @click="say('Hello Child',$event)"></div>
             </div>
         </div>
-        <script src="/lib/vue.js"></script>
+        <script src="./lib/vue.js"></script>
         <script>
             // 1. JS代码
             var vm = new Vue({
@@ -60,12 +63,14 @@
                 methods: {
                     say: function (event) {
                         console.log(this.content);
+                        // 是否有事件对象
                         if (event) {
                             console.log(event.target.id)
                         }
                     }
                 }
             });
+            // 2.1 直接调用时，因为没有event事件对象，所以只打印了Hello World
             vm2.say();
             // 3. 事件参数
             var vm3 = new Vue({

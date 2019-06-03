@@ -6,27 +6,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
-        <style>
-            [v-cloak] {
-                display: none;
-            }
-        </style>
     </head>
 
     <body>
-        <div v-cloak id="app">
-            <input type="button" value="BTN" :title="title">
-            <input type="button" value="BTN" :title="title + '123'">
-            <input type="button" value="BTN" :title="title == '123'? 'YES' : 'NO'">
+        <div id="app">
+            <span :title="title">悬浮看title</span>
+            <span :title="title + '123'">悬浮看title</span>
+            <span :title="title == '123'? 'YES' : 'NO'">悬浮看title</span>
         </div>
-
-        <script src="/lib/vue.js"></script>
+        <script src="./lib/vue.js"></script>
         <script>
             var vm = new Vue({
                 el: "#app",
                 data() {
                     return {
-                        title: "BTN"
+                        title: "title"
                     }
                 }
             });

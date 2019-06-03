@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        1. 计算属性和方法的比较：
+        <div v-cloak id="app">
+            data属性中的数据：{{num}}
+            <br>
+            <button @click="fn">测试（每隔1秒执行一次）</button>
+        </div>
+        <script src="./lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        num: 8,
+                        timer: null
+                    }
+                },
+                computed: {
+                    getNum() { // 除非num改变，否则只执行第一次
+                        console.log("computed ing...");
+                        return this.num;
+                    }
+                },
+                methods: {
+                    getNum2() { // 每次都会执行
+                        console.log("methods ing...");
+                        return this.num;
+                    },
+                    fn() {
+                        this.timer = setInterval(() => {
+                            console.log('计算属性' + vm.getNum);
+                            // console.log('普通方法' + vm.getNum2());
+                        }, 1000);
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

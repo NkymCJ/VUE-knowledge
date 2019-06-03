@@ -12,7 +12,7 @@ VUE 学习
 
 挂载点不能是body，vm实例只能处理挂载点下的内容。
 
-绑定挂载点的值为选择器。
+绑定挂载点的值为CSS选择器。
 
 示例：
 
@@ -29,7 +29,7 @@ var vm = new Vue({
 
 ## 设置数据
 
-#### 一般写法
+### 一般写法
 
 ```
 data: {
@@ -37,22 +37,22 @@ data: {
 }
 ```
 
-#### 函数写法(以维护一份被返回对象的独立的拷贝)
+### 函数写法(以维护一份被返回对象的独立的拷贝)
 
 ```
 data: function () {
   return {
-    content: 'Hello Vue'
+    content: "Hello Vue"
   }
 }
 ```
 
-#### ES6简写
+### ES6简写
 
 ```
 data() {
   return {
-    content: 'Hello Vue'
+    content: "Hello Vue"
   }
 }
 ``` 
@@ -71,11 +71,11 @@ data() {
 | v-text | 无 | 替换内部所有内容 | 不转义 |
 | v-html | 无 | 替换内部所有内容 | 转义 |
 
-解决插值表达式的闪烁问题：添加v-cloak样式。
+解决插值表达式的闪烁问题：添加v-cloak样式。一般放在挂载点，注意样式优先级。
 
 VUE会在插值表达式替换完成时清除此样式。
 
-v-cloak样式定义如下：（!important 看情况加）
+v-cloak样式定义如下：（!important 视情况而定）
 
 ```
 [v-cloak] {
@@ -87,21 +87,23 @@ v-cloak样式定义如下：（!important 看情况加）
 
 模板内的插值表达式非常便利，可以用于简单运算，但是放入太多逻辑会让模板过重且难以维护，例如下面这个插值表达式：
 
-```{{ message.split('').reverse().join('') }}```
+```{{ message.split(" ").reverse().join(" ") }}```
 
 所以对于复杂逻辑，要另辟蹊径。可以使用计算属性、侦听器、方法。
 
-可以在computed属性中可以定义一些属性，这些属性叫做计算属性。它们的本质是一个方法，只不过在使用的时候，直接把它们的名称当作属性来使用，而不是把它们当作方法去调用，使用的时候一定不要加()。
+可以在computed属性中可以定义一些数据，这些数据叫做计算属性。它们的本质是一个方法，只不过在使用的时候，直接使用它们的名称，而不是把它们当作方法去调用，使用的时候一定不要加()。
 
-#### 使用方法
+#### 设置和使用
 
 1. 默认GETTER
 
     这种形式只创建了GETTER，如果进行SET的话会报错。
 
     ```
-    fullName() {
-      return this.firstName + " " + this.lastName;
+    computed: {
+        fullName() {
+            return this.firstName + " " + this.lastName;
+        }
     }
     ```
 
@@ -113,45 +115,17 @@ v-cloak样式定义如下：（!important 看情况加）
         return this.firstName + " " + this.lastName;
       },
       set(newValue) {
-        var names = newValue.split(' ');
+        var names = newValue.split(" ");
         this.firstName = names[0];
         this.lastName = names[1];
       }
     }
     ```
 
-3. 完整示例
+3. 使用方法
 
     ```
-    <div id="app">
-        <input type="text" v-model="firstName"> +
-        <input type="text" v-model="lastName"> =
-        <div>{{fullName}}</div>
-    </div>
-    ```
-
-    ```
-    var vm = new Vue({
-        el: "#app",
-        data() {
-            return {
-                firstName: '',
-                lastName: ''
-            }
-        },
-        computed: {
-            fullName: {
-                get() {
-                  return this.firstName + ' ' + this.lastName;
-                },
-                set(newValue) {
-                  var name = newValue.split(',');
-                  this.firstName = name[0];
-                  this.lastName = name[1];
-                }
-            }
-        }
-    })
+    {{fullName}} // 使用时切记不要加()
     ```
 
 #### 计算属性与方法的差异
@@ -165,14 +139,18 @@ v-cloak样式定义如下：（!important 看情况加）
 ```
 methods: {
   getfullName() {
-    return this.firstName + ' ' + this.lastName;
+    return this.firstName + " " + this.lastName;
   }
 }
 ```
 
-但是不同的是计算属性是基于它们的响应式依赖进行缓存的，只在相关响应式依赖发生改变时它们才会重新求值，说简单点，就是：计算属性内部所用到的任何data中的数据发生变化时，才会立即重新计算该值。计算属性的求值结果会被缓存起来，方便下次直接使用，若无发生变化，则不会重新对其求值。
+区别：
 
-使用计算属性可以减少不必要的开销。
+1. 计算属性是基于它所依赖的数据进行更新的，在相关依赖的数据发生变化时，才会进行更新。而普通的方法每次都会执行。
+
+2. 计算属性是有缓存的，只要它所依赖的数据没有发生改变，后面的每一次访问计算属性中的值，都是之前缓存的结果，不会重复执行。
+
+所以，在某些情况下，使用计算属性可以减少不必要的开销。
 
 #### 计算属性与侦听器的差异
 
@@ -185,17 +163,17 @@ methods: {
 ```
 data() {
   return {
-    firstName: '',
-    lastName: '',
-    fullName: ''
+    firstName: "",
+    lastName: "",
+    fullName: ""
   }
 },
 watch: {
   firstName(newVal, oldVal) {
-    this.fullName = newVal + ' ' + this.lastName;
+    this.fullName = newVal + " " + this.lastName;
   },
   lastName(newVal, oldVal) {
-    this.fullName = this.firstName + ' ' + newVal;
+    this.fullName = this.firstName + " " + newVal;
   }
 }
 ```
@@ -204,21 +182,19 @@ watch: {
 
 ## 绑定属性
 
-v-bind:属性名，可以简写为:属性名。
+v-bind:属性名，可以简写为 :属性名。
 
-v-bind中可以写合法的JS表达式，进行简单的操作：
+v-bind绑定的值中可以写合法的JS表达式，进行简单的操作：
 
 ```
-<div :title="content">{{content}}</div>
-<div :title="content + '123'">{{content}}</div>
-<div :title="content == 'Hello Vue'? content : ''">{{content}}</div>
+<span :title="title">demo</span>
+<span :title="title + '123'">demo</span>
+<span :title="title == '123'? 'YES' : 'NO'">demo</span>
 ```
 
 ## 事件
 
-v-on:事件，可以简写为@:事件。
-
-(补充) 获取vm的data里数据或调用methods的方法：this.数据属性名或this.方法名来访问(this指向new出来的实例vm)。
+v-on:事件，可以简写为 @:事件。
 
 #### 绑定事件
 
@@ -229,15 +205,9 @@ v-on:事件，可以简写为@:事件。
     <p>{{count}}</p>
     ```
 
-    ```
-    data: {
-      count: 0
-    }
-    ```
-
 2. 事件处理方法
 
-    默认传递event对象。
+    不写参数，默认传递event事件对象。
 
     ```
     <button id="button" @click="show">button</button>
@@ -249,13 +219,13 @@ v-on:事件，可以简写为@:事件。
       console.log(this.content);
       // event是原生DOM事件
       if (event) {
-        console.log(event.target.id);
+        console.log(event);
       }
     }
     ```
-
+    
+    外部也可以直接调用方法，但此时没有event事件对象，event为undefined。
     ```
-    // 外部也可以直接调用方法
     vm.show();
     ```
 
@@ -280,7 +250,9 @@ v-on:事件，可以简写为@:事件。
 
 ## 事件修饰符
 
-```.stop``` 阻止冒泡；
+事件修饰符
+
+```.stop``` 阻止冒泡
 
 ```.prevent``` 阻止默认事件；
 
@@ -288,13 +260,17 @@ v-on:事件，可以简写为@:事件。
 
 ```.self``` 只有点击当前元素才会触发；
 
-```.once``` 只触发一次；
+```.once``` 只触发一次；不像其它事件修饰符只能对原生的DOM事件起作用，.once修饰符可以被用到自定义的组件事件上。
 
-```.passive``` 告诉浏览器不阻止事件的默认行为。
+```.passive``` 告诉浏览器不阻止事件的默认行为；
+
+事件修饰符可以串联，例如```v-on:click.prevent.self```和```v-on:click.self.prevent```，详见06A.事件修饰符串联.html。
 
 ## 双向绑定
 
 v-model:属性，只能运用在表单元素中。
+
+使用v-model时应该在组件的data数据中声明其初始值。
 
 v-model会忽略所有表单元素的value、checked、selected特性的初始值而总是将vm示例的数据作为数据来源。
 
@@ -306,21 +282,37 @@ v-model在内部为不同的输入元素使用不同的属性并抛出不同的�
 
 3. select将value作为prop并将change作为事件。
 
+#### 双向绑定的修饰符
+
+1. .lazy ```<input v-model.lazy="content" >```
+
+    在默认情况下，v-model在每次input事件触发后将输入框的值与数据进行同步(除了输入法组合文字时)。可以通过添加lazy修饰符，从而转变为使用change事件进行同步。
+
+    补充：change事件是更改内容后失焦触发的。input事件是每按一个键都会触发。
+
+2. .number ```<input v-model.number="age">```
+
+    添加number修饰符，自动将用户的输入值转为数值类型。
+
+3. .trim ```<input v-model.trim="content">```
+
+    添加trim修饰符，自动过滤用户输入的首尾空白字符。
+
 ## 绑定class
 
 v-bind:属性名，简写为:属性名。
 
-v-bind:class 可以与普通的class属性共存：
+v-bind:class 可以与普通的class属性共存。
 
 ```
 <div class="static" v-bind:class="dynamic"></div>
 ```
 
-总结：只要是对象形式的，对象的属性名是类名，不管加不加引号，对象的值才是数据标识符；不是对象形式的，加引号是类名，不加则是数据标识符。
+总结：对象形式的，对象的属性名是类名，不管加不加引号，对象的值才是数据；数组形式的，加引号是类名，不加则是数据。
 
-#### 使用数组的语法
+#### 数组形式
 
-1. 直接使用类名
+1. 直接使用类名。使用class和class1样式。
 
     ```
     .class{}
@@ -328,7 +320,7 @@ v-bind:class 可以与普通的class属性共存：
     <div v-bind:class="['class','class1']">X</div>
     ```
 
-2. 使用数据
+2. 使用数据。使用数据class和class1的值的样式。
 
     ```
     .class{}
@@ -340,7 +332,7 @@ v-bind:class 可以与普通的class属性共存：
     }
     ```
 
-3. 使用三元表达式
+3. 使用三元表达式。使用数据class的值的样式，再根据数据isActive的值（真或假）来决定是否使用class1的值的样式。
 
     ```
     .class{}
@@ -353,9 +345,9 @@ v-bind:class 可以与普通的class属性共存：
     }
     ```
 
-4. 数组中使用对象语法
+4. 数组形式中再使用对象形式。使用数据class的值的样式，再根据数据isActive的值（真或假）来决定是否使用class1的样式。
 
-    此时对象的属性为类名，可带引号也可不带引号；对象的值为数据标识符。
+    此时对象的class1键为类名，可带引号也可不带引号；值为数据。
 
     ```
     .class{}
@@ -363,24 +355,25 @@ v-bind:class 可以与普通的class属性共存：
     <div v-bind:class="[class,{class1:isActive}]">X</div>
     data:{
       class:'class',
-      class1:'class1',
       isActive:true
     }
     ```
-      
-#### 使用对象的语法
 
-对象的属性为类名，可带引号也可不带引号；对象的值为数据标识符。
+#### 对象形式
+
+键为类名，可带引号也可不带引号；值为数据。
 
 ```
 .class{}
 .class1{}
-<div v-bind:class="{class:isClassActive,class1:isClass1Active}">X</div>
+<div v-bind:class="{class:classActive,class1:class1Active}">X</div>
 data:{
-  isClassActive:true,
-  isClass1Active:false
+  classActive:true,
+  class1Active:false
 }
 ```
+
+以上代码中，是否使用class和class1样式，取决于classActive和class1Active的truthiness（真或假）。
 
 ```
 .class{}
@@ -391,19 +384,32 @@ data:{
 }
 ```
 
+以上代码中，class和class1的样式均被使用。
+
 ## 绑定style
 
 v-bind:属性名，简写为:属性名。
 
-v-bind:class 可以与普通的class属性共存。
+v-bind:style 可以与普通的style属性共存。
 
 ```
 <div style="margin-left:10px;" v-bind:style="color:'red'"></div>
 ```
+#### 数组形式
 
-#### 使用对象的语法
+将多个样式对象应用到同一个元素上。
 
-此时对象的属性名为CSS属性名，使用驼峰式或用单引号括起来的短横线分割来命名。
+```
+<div v-bind:style="[styleList,styleList1]">x</div>
+data:{
+  styleList:{color:'red',fontWeight:550},
+  styleList1:{backgroundColor:'deepskyblue',height:'150px'}
+}
+```
+
+#### 对象形式
+
+此时对象的键名为CSS属性名，使用驼峰式（不加引号）、用单引号括起来的短横线分割来命名。
 
 ```
 <div v-bind:style="{color:'red','font-weight':550}">x</div>
@@ -413,18 +419,6 @@ v-bind:class 可以与普通的class属性共存。
 data:{
   styleList:{color:'red','font-weight':550}
   styleList1:{color:'red',fontWeight:550}
-}
-```
-
-#### 使用数组的语法
-
-将多个样式对象应用到同一个元素上。
-
-```
-<div v-bind:style="[styleList,styleList1]">x</div>
-data:{
-  styleList:{color:'red',fontWeight:550},
-  styleList1:{backgroundColor:'deepskyblue',height:'150px'}
 }
 ```
 
@@ -450,7 +444,7 @@ data:{
 }
 ```
 
-#### 迭代对象属性
+#### 迭代对象
 
 ```v-for="value in obj"```
 
@@ -475,7 +469,7 @@ data:{
 }
 ```
 
-#### 取值范围重复
+#### 使用值范围
 
 v-for="count in 10"
 
@@ -485,10 +479,28 @@ v-for="count in 10"
 
 #### KEY
 
-每次循环时，使用 key 标识当前项的唯一身份
+每次循环时，使用key标识当前项的唯一身份
 
-1. key 绑定的属性只能是 number 或 string 类型
-2. key 需要使用 v-bind 绑定，即 v-bind:key
+1. key绑定的属性只能是 number 或 string 类型
+2. key需要使用v-bind绑定，即v-bind:key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## v-if / v-show
 
