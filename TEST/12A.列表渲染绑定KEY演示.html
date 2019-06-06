@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>选中复选框，然后增加元素看效果。</h1>
+        <div v-cloak id="app">
+            <h2>没有KEY</h2>
+            <input type="text" v-model="id">
+            <input type="text" v-model="name">
+            <button @click="add">add</button>
+            <div v-for="item in list">
+                <input type="checkbox">
+                {{item.id}} - {{item.name}}
+            </div>
+        </div>
+        <h2>为什么勾选的勾不随元素的增加而改变，而是停留在原先的位置？</h2>
+        <h3>
+            原因：当用v-for更新已经渲染过的列表时，Vue默认采用“就地复用”的策略（实际原因是Virtual DOM的Diff算法）。
+            如果数据项的顺序被改变，Vue将不是移动DOM元素来匹配数据项的改变，而是简单地复用此处的每个元素，
+            并确保它在特定的索引下显示已被渲染过的每个元素。
+        </h3>
+        <div v-cloak id="app2">
+            <h2>有KEY</h2>
+            <input type="text" v-model="id">
+            <input type="text" v-model="name">
+            <button @click="add">add</button>
+            <div v-for="item in list" :key="item.id">
+                <input type="checkbox">
+                {{item.id}} - {{item.name}}
+            </div>
+        </div>
+        <h2>为什么绑定了KEY的值，就正常了？</h2>
+        <h3>
+            原因：为了避免“就地复用”策略（Diff算法）导致的以上问题，Vue提供了一种方式来表达“两个元素是完全独立的，不要复用它们”，
+            也就是绑定KEY属性（每项的KEY属性都要具有唯一性，且只能是string或number类型）。这样子，Vue就可以跟踪每项的身份，
+            从而正确识别每一项。
+        </h3>
+        <script src="./lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        list: [{
+                                id: 0,
+                                name: "0"
+                            },
+                            {
+                                id: 1,
+                                name: "1"
+                            },
+                            {
+                                id: 2,
+                                name: "2"
+                            }, {
+                                id: 3,
+                                name: "3"
+                            }, {
+                                id: 4,
+                                name: "4"
+                            }
+                        ],
+                        id: " ",
+                        name: " "
+                    }
+                },
+                methods: {
+                    add() {
+                        this.list.unshift({
+                            id: this.id,
+                            name: this.name
+                        })
+                    }
+                }
+            });
+            var vm = new Vue({
+                el: "#app2",
+                data() {
+                    return {
+                        list: [{
+                                id: 0,
+                                name: "0"
+                            },
+                            {
+                                id: 1,
+                                name: "1"
+                            },
+                            {
+                                id: 2,
+                                name: "2"
+                            }, {
+                                id: 3,
+                                name: "3"
+                            }, {
+                                id: 4,
+                                name: "4"
+                            }
+                        ],
+                        id: " ",
+                        name: " "
+                    }
+                },
+                methods: {
+                    add() {
+                        this.list.unshift({
+                            id: this.id,
+                            name: this.name
+                        })
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

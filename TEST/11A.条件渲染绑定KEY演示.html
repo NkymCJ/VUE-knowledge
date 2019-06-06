@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2>没有KEY</h2>
+        <div v-cloak id="app">
+            <div v-if="loginType === 'username'">
+                <label>Username</label>
+                <input placeholder="Enter your username">
+            </div>
+            <div v-else>
+                <label>Email</label>
+                <input placeholder="Enter your email address">
+            </div>
+            <a href="" @click.prevent="loginType=='username'?loginType='email':loginType='username'">切换</a>
+        </div>
+        <h3>效果：切换loginType时，不会清除用户已经输入的内容，而是仅仅替换placeholder。</h3>
+        <h3>原因：切换时，由于两个模板使用了相同的元素，Vue就地复用（实际原因是virtual DOM的Diff算法）。</h3>
+        <h2>有KEY</h2>
+        <div v-cloak id="app2">
+            <div v-if="loginType === 'username'">
+                <label>Username</label>
+                <input key="username" placeholder="Enter your username">
+            </div>
+            <div v-else>
+                <label>Email</label>
+                <input key="email" placeholder="Enter your email address">
+            </div>
+            <a href="" @click.prevent="loginType=='username'?loginType='email':loginType='username'">切换</a>
+        </div>
+        <h3>效果：切换loginType时，清除了用户已经输入的内容。</h3>
+        <h3>原因：Vue提供了一种方式来表达“两个元素是完全独立的，不要复用它们”。</h3>
+        <h3>做法：添加一个具有唯一值的KEY属性即可。</h3>
+        <h2>补充：列表渲染会再次涉及到KEY属性。</h2>
+        <script src="./lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        loginType: 'username'
+                    }
+                }
+            });
+            var vm2 = new Vue({
+                el: "#app2",
+                data() {
+                    return {
+                        loginType: 'username'
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

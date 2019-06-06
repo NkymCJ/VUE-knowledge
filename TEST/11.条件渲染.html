@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2>v-if</h2>
+        <div v-cloak id="app">
+            <h3 v-if="getValue() > 0">
+                Hello See
+            </h3>
+            <h3 v-if="see == 2">
+                Hello 2!
+            </h3>
+            <h3 v-else-if="see == 1">
+                Hello 1!
+            </h3>
+            <h3 v-else>
+                Hello 0!
+            </h3>
+        </div>
+        <h2>v-show</h2>
+        <div v-cloak id="app2">
+            <h3 v-show="see">
+                Hello v-show!
+            </h3>
+            <a href="" @click.prevent="see = !see">切换</a>
+        </div>
+
+        <script src="./lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        see: -1
+                    }
+                },
+                methods: {
+                    getValue() {
+                        return 1;
+                    }
+                }
+            });
+            var vm2 = new Vue({
+                el: "#app2",
+                data() {
+                    return {
+                        see: true
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

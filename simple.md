@@ -422,7 +422,59 @@ data:{
 }
 ```
 
-## v-for指令
+## 条件渲染 v-if与v-show
+
+#### v-if
+
+v-if指令用于条件性地渲染一块内容。
+
+这块内容只会在指令的表达式返回truthy值的时候被渲染。
+
+```
+<h2 v-if="see"></h2>
+<h2 v-if="value > 0"></h2>
+<h2 v-if="getValue() > 0"></h2>
+```
+
+```
+data() {
+  return {
+    see: true,
+    value: 1
+  }
+},
+methods: {
+  getValue() {
+    return 1;
+  }
+}
+```
+
+可以用v-else来表示v-if的“else块”。
+
+可以用v-else-if来表示v-if的“else-if块”。
+
+v-else和v-else-if都必须紧跟在v-if或v-else-if的元素后面，否则将不会被识别。
+
+##### 用KEY管理可复用的元素
+
+Vue会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。这是因为Virtual DOM使用Diff算法实现的原因。
+
+为什么需要这样做? 详见11A.条件渲染绑定KEY演示.html
+
+#### v-show
+
+v-show也可以条件地展示元素。用法与v-if大致一样。
+
+#### 两者的不同点
+
+- v-if每次切换过程中每次都会销毁和重建元素，切换耗性能
+- v-show只是切换元素的display样式，初始耗性能
+
+总结：如果需要非常频繁地切换，则使用v-show较好；如果
+在运行时条件很少改变，则使用v-if较好。
+
+## 列表渲染 v-for
 
 #### 遍历数组 
 
@@ -481,31 +533,55 @@ v-for="count in 10"
 
 每次循环时，使用key标识当前项的唯一身份
 
-1. key绑定的属性只能是 number 或 string 类型
-2. key需要使用v-bind绑定，即v-bind:key
+为什么需要这样做? 详见12A.列表渲染绑定KEY演示.html
 
+1. key可以使用v-bind绑定，即v-bind:key。也可以手动绑定唯一值。
 
+2. key绑定的属性只能是number或string类型。
 
+## Diff算法
 
+#### 起因
 
+首先，渲染真实的DOM的开销是很大的，比如有时候我们要修改某个数据，如果直接渲染到真实的DOM上会引起整个DOM树的重绘和重排。
 
+那么有没有可能只更新我们要修改的那一小部分DOM而不用更新整个DOM呢？
 
+#### Virtual DOM
 
+Vue将真实DOM抽象成一个由诸多节点（这种节点称为VNode，JS对象）组成的虚拟DOM。
 
+以VNode模拟真实的DOM元素，我们可以对这棵虚拟DOM进行创建节点、删除节点以及修改节点等操作。
 
+真实DOM
 
+```
+<div class="test">
+    <span class="demo">hello,VNode</span>
+</div>
+```
 
+抽象后的虚拟DOM
 
+```
+{
+    tag: 'div'
+    data: {
+        class: 'test'
+    },
+    children: [
+        {
+            tag: 'span',
+            data: {
+                class: 'demo'
+            }
+            text: 'hello,VNode'
+        }
+    ]
+}
+```
 
-
-
-
-
-
-## v-if / v-show
-
-    - v-if 每次都会重新删除或创建元素，切换耗性能
-    - v-show 只是切换元素的 display 样式，初始耗性能
+// 2019-06-06
 
 14. 过滤器
 
