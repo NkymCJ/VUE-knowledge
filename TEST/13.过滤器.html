@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <h1 :class="content | myFilter | myFilter2">{{content | myFilter | myFilter2}}</h1>
+            <h1>{{content | myFilter3('123','456')}}</h1>
+            <h1>{{content | myFilter3('123','456')}}</h1>
+        </div>
+        <script src="./lib/vue.js"></script>
+        <script>
+            Vue.filter("myFilter3", function (value, arg0, arg1) {
+                return arg0 + value + arg1;
+            });
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        content: "Hello Filters"
+                    }
+                },
+                filters: {
+                    myFilter: function (value) {
+                        if (!value) {
+                            return "";
+                        }
+                        return value + " 123";
+                    },
+                    myFilter2: function (value) {
+                        if (!value) {
+                            return "";
+                        }
+                        return value + " 456";
+                    },
+                    // myFilter3(value, arg0, arg1) {
+                    //     return value + arg0 + arg1;
+                    // }
+                }
+            });
+        </script>
+    </body>
+
+</html>
