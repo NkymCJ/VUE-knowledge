@@ -15,29 +15,48 @@
 
     <body>
         <div v-cloak id="app">
+            <h2>迭代数组 (item, index) in items</h2>
             <ul>
-                <li v-for="item in items" :key="item.id">
-                    {{ item.message }}
+                <li v-for="(item, index) in items" :key="item.id">
+                    {{ item.message }} -- {{ index }}
+                </li>
+            </ul>
+            <h2>迭代对象 (value, key, index) in o</h2>
+            <h3>注意：书写顺序</h3>
+            <ul>
+                <li v-for="(value,key,index) in o">
+                   {{ value }} -- {{ key }} -- {{ index }}
+                </li>
+            </ul>
+            <h2>迭代数字 count in 10</h2>
+            <h3>注意：从1开始</h3>
+            <ul>
+                <li v-for="count in 10">
+                    {{ count }}
                 </li>
             </ul>
         </div>
 
-        <script src="/lib/vue.js"></script>
+        <script src="./lib/vue.js"></script>
         <script>
             var vm = new Vue({
                 el: "#app",
                 data() {
                     return {
-                        items:[
-                            {
-                                id:0,
-                                message:'Foo'
+                        items: [{
+                                id: 0,
+                                message: 'Foo'
                             },
                             {
-                                id:1,
-                                message:'Bar'
+                                id: 1,
+                                message: 'Bar'
                             }
-                        ]
+                        ],
+                        o: {
+                            id: "123",
+                            name: "456",
+                            gender: "0"
+                        }
                     }
                 }
             });

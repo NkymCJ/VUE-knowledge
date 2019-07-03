@@ -15,7 +15,7 @@
 
     <body>
         <div id="app" v-cloak>
-
+            <h2 v-dir:foo.a.b v-dir2>{{content}}</h2>
         </div>
         <script src="./lib/vue.js"></script>
         <script>
@@ -23,7 +23,39 @@
                 el: "#app",
                 data() {
                     return {
-
+                        content: "Hello Directives",
+                        obj: {
+                            a: 1,
+                            b: 2
+                        }
+                    }
+                },
+                directives: {
+                    dir: {
+                        bind(el, binding) {
+                            console.log("bind");
+                            console.log(binding);
+                        },
+                        inserted(el, binding) {
+                            console.log("inserted");
+                            console.log(binding);
+                        },
+                        unbind(el, binding) {
+                            console.log("unbind");
+                            console.log(binding);
+                        },
+                        update(el, binding) {
+                            console.log("update");
+                            console.log(binding);
+                        },
+                        componentUpdated(el, binding) {
+                            console.log("componentUpdated");
+                            console.log(binding);
+                        }
+                    },
+                    dir2(el, binding) {
+                        console.log("bind or update")
+                        console.log(binding);
                     }
                 }
             });

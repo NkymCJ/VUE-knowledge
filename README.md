@@ -19,6 +19,10 @@ VUE是前端框架之一，前端三大框架分别为：VUE、ANGULAR、REACT�
 
 VUE是用于构建用户界面的框架，重点关注视图层。
 
+VUE是通过构建数据驱动WEB应用开发的框架。
+
+VUE是渐进式JAVASCRIPT框架(一步一步满足需求)。
+
 ### 原生JS
 
 原生JS操作DOM相当麻烦。
