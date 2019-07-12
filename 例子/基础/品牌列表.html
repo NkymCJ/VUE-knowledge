@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
+        <title>品牌列表</title>
         <script src="../lib/vue-static/vue.js"></script>
         <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
         <style>
@@ -30,10 +30,18 @@
                     </label>
                     <input type="button" value="添加" class="btn btn-primary" @click="add">
                     <label>搜索品牌关键字：</label>
-                    <input type="text" class="form-control" v-model="keyword" v-focus>
+                    <!-- <input type="text" class="form-control" v-model="keyword" v-focus> -->
+                    <!-- 测试binding.value -->
+                    <input type="text" class="form-control" v-model="keyword" v-color="'red'">
+                    <!-- <input type="text" class="form-control" v-model="keyword" v-color="color"> -->
+                    <!-- 测试binding.value的JS表达式 -->
+                    <!-- <input type="text" class="form-control" v-model="keyword" v-color="{value:'#3c8ff2'}"> -->
+                    <!-- 测试binding.arg -->
+                    <!-- <input type="text" class="form-control" v-model="keyword" v-color:color="color"> -->
+                    <!-- 测试binding.modifiers -->
+                    <!-- <input type="text" class="form-control" v-model="keyword" v-color.color="color"> -->
                 </div>
             </div>
-
             <table class="table table-bordered table-hover table-striped">
                 <thead>
                     <tr>
@@ -67,9 +75,39 @@
                 var s = dt.getSeconds().toString().padStart(2, '0');
                 return `${y}-${M}-${d} ${H}:${m}:${s}`;
             });
-            Vue.directive("focus",{
-                inserted: function(el) {
+            // v-focus 设置自动获取焦点
+            Vue.directive("focus", {
+                inserted: function (el) {
                     el.focus();
+                },
+                update(el) {
+                    console.log("updated");
+                }
+            });
+            // v-color 设置字体颜色
+            Vue.directive("color", {
+                bind: function (el, binding) {
+                    console.log(binding);
+
+                    // 测试binding.value
+                    el.style.color = binding.value;
+                    console.log(el.style.color);
+
+                    // 测试binding.value的JS表达式
+                    // el.style.color = binding.value.value;
+                    // console.log(el.style.color);
+
+                    // 测试binding.arg
+                    // if (binding.arg == "color") {
+                    //     el.style.color = binding.value;
+                    // }
+                    // console.log(el.style.color);
+
+                    // 测试binding.modifiers
+                    // if (binding.modifiers.color) {
+                    //     el.style.color = binding.value;
+                    // }
+                    // console.log(el.style.color);
                 }
             });
             var vm = new Vue({
@@ -79,6 +117,7 @@
                         id: "",
                         name: "",
                         keyword: "",
+                        color: "#3c8ff2",
                         list: [{
                             id: 1,
                             name: "奔驰",

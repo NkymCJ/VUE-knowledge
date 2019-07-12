@@ -1,15 +1,15 @@
 # VUE-knowledge
 
-部分内容理解取自互联网，仅供个人学习。
+部分内容及其对应理解取自互联网，仅供个人学习。
 
 ### 一些简单的VUE知识点
 
 | 文件名 | 描述 |
 | - | - |
-| simple | 语法 |
-| lifecycle | 生命周期 |
-| component | 组件 |
-| router | 路由 |
+| 基础.md | 基础语法 |
+| 生命周期.md | 生命周期图示 |
+| 组件.md | 组件 |
+| 路由.md | 路由 |
 | vue-resource | 请求 |
 | transition&&animation | 动画 | 
 

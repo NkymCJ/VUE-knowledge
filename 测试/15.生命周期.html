@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <h1 id="h1" ref="h1" @click="sayHi">{{ content }}</h1>
+            <input type="button" value="change" @click="content = content == 'Hello' ? 'Hello Vue' : 'Hello'">
+        </div>
+        <script src="./lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        content: "Hello Vue"
+                    }
+                },
+                methods: {
+                    sayHi() {
+                        console.log(this.content);
+                    }
+                },
+                beforeCreate() {
+                    // console.log(this.content); // -> undefined
+                    // this.sayHi(); // -> error
+                },
+                created() {
+                    // console.log(this.content); // -> Hello Vue
+                    // this.sayHi(); // -> Hello Vue
+                },
+                beforeMount() {
+                    // 还是模板字符串，还没有被替换
+                    // console.log(document.getElementById('h1').innerHTML); // -> {{ content }}
+                },
+                mounted() {
+                    // 已经替换完成
+                    // console.log(this.$refs.h1.innerHTML); // -> Hello Vue
+                },
+                beforeUpdate() { // 点击button，看效果
+                    // console.log(this.$refs.h1.innerHTML); // 页面还是旧的
+                },
+                updated() { // 点击button，看效果
+                    // console.log(this.$refs.h1.innerHTML); // 页面已经是新的
+                }
+            });
+        </script>
+    </body>
+
+</html>
