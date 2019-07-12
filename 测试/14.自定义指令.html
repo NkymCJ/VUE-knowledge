@@ -20,7 +20,7 @@
         </div>
         <script src="./lib/vue.js"></script>
         <script>
-            Vue.directive('focus',function(el){
+            Vue.directive('focus', function (el) {
                 console.log('全局');
                 el.focus();
             });
@@ -33,7 +33,7 @@
                 },
                 directives: {
                     focus: {
-                        inserted: function(el){
+                        inserted: function (el) {
                             console.log('私有');
                             el.focus();
                         }

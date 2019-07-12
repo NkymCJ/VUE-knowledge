@@ -17,7 +17,7 @@
         <div v-cloak id="app">
             <h2>文本</h2>
             <input type="text" v-model="value">
-            <input type="text" v-model.lazy="value">
+            <input type="text" @change="change" v-model.lazy="value">
             <input type="text" v-model.trim="value">
             <input type="text" v-model.number="value">
             <p>{{value}}</p>
@@ -64,6 +64,11 @@
                         picked: "",
                         select: "0",
                         select1: [],
+                    }
+                },
+                methods: {
+                    change() {
+                        console.log("change");
                     }
                 }
             });
