@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>小球动画</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+
+            .ball {
+                height: 20px;
+                width: 20px;
+                background-color: #3c8ff2;
+                border-radius: 50%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <input type="button" value="加入购物车" @click="flag = !flag">
+
+            <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+                <div class="ball" v-show="flag"></div>
+            </transition>
+        </div>
+
+        <script src="./lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        flag: false
+                    }
+                },
+                methods: {
+                    beforeEnter(el) {
+                        el.style.transform = 'translate(0,0)';
+                    },
+                    enter(el, done) {
+                        el.offsetWidth;
+                        el.style.transition = 'all 1s ease';
+                        el.style.transform = 'translate(150px,250px)';
+                        done();
+                    },
+                    afterEnter(el) {
+                        // 这句话的第一个功能是控制小球的显示与隐藏
+                        // 第二个功能是直接跳过后半场动画，让flag标识符直接变为false
+                        // 当第二次再点击按钮的时候，flag还是从false->true。
+                        this.flag = !this.flag;
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

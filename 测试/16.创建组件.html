@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>创建组件</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <my-com></my-com>
+        </div>
+
+        <!-- 外部定义组件的模板结构 -->
+        <template id="temp">
+            <div>
+                <h3>通过template元素，在外部定义的组件结构</h3>
+            </div>
+        </template>
+
+        <script src="./lib/vue.js"></script>
+        <script>
+            // 全局方法一
+            // var com = Vue.extend({
+            //     template: '<h3>Hello Global Component!</h3>'
+            // });
+            // Vue.component('myCom', com);
+            // var vm = new Vue({
+            //     el: '#app'
+            // });
+            // 全局方法一结合成一步
+            // Vue.component('myCom', Vue.extend({
+            //     template: '<h3>Hello Global Component!</h3>'
+            // }));
+            // var vm = new Vue({
+            //     el: '#app'
+            // });
+            // 全局方法一结合成一步还可以这么写
+            // Vue.component('myCom', {
+            //     template: '<h3>Hello Global Component!</h3>'
+            // });
+            // var vm = new Vue({
+            //     el: '#app'
+            // });
+            // 全局方法二
+            // Vue.component('myCom', {
+            //     template: '#temp'
+            // });
+            // var vm = new Vue({
+            //     el: '#app'
+            // });
+            // 私有
+            // var vm = new Vue({
+            //     el: '#app',
+            //     components: {
+            //         'my-com' : {
+            //             // template: '<h3>Hello Private Component!</h3>'
+            //             template: '#temp'
+            //         }
+            //     }
+            // });
+            // 更加方便的写法
+            var myCom = {
+                template: '<h3>Hello Component!</h3>'
+            };
+            var vm = new Vue({
+                el: '#app',
+                components: {
+                    myCom
+                }
+            });
+        </script>
+    </body>
+
+</html>

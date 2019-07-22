@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>为什么data属性必须是一个方法且返回一个新对象</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <counter></counter>
+            <counter></counter>
+            <counter></counter>
+            <counter></counter>
+        </div>
+
+        <template id="temp">
+            <div>
+                <input type="button" value="+1" @click="count += 1">
+                <h3>{{ count }}</h3>
+            </div>
+        </template>
+
+        <script src="./lib/vue.js"></script>
+        <script>
+            var dataObj = {
+                count: 0
+            }
+            // 计数器组件
+            var com = Vue.extend({
+                template: '#temp',
+                data: function () {
+                    // return dataObj;
+                    return {
+                        count: 0
+                    }
+                }
+            });
+            Vue.component('counter', com);
+            var vm = new Vue({
+                el: '#app'
+            });
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>组件切换动画</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+
+            #app {
+                width: 600px;
+                overflow: hidden;
+            }
+
+            .v-enter,
+            .v-leave-to {
+                opacity: 0;
+                transform: translateX(150px);
+            }
+
+            .v-enter-active,
+            .v-leave-active {
+                transition: all .5s ease;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <input type="button" @click="component = 'login'" value="登录">
+            <input type="button" @click="component = 'register'" value="注册">
+
+            <transition mode="out-in">
+                <component :is="component"></component>
+            </transition>
+        </div>
+
+        <script src="./lib/vue.js"></script>
+        <script>
+            Vue.component('login', {
+                template: '<h3>登录组件</h3>'
+            });
+            Vue.component('register', {
+                template: '<h3>注册组件</h3>'
+            });
+            var vm = new Vue({
+                el: "#app",
+                data: {
+                    component: "login"
+                }
+            });
+        </script>
+    </body>
+
+</html>

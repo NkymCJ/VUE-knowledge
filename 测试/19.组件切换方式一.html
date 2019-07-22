@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>组件切换方式一</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <input type="button" @click="flag = true" value="登录">
+            <input type="button" @click="flag = false" value="注册">
+            <login v-if="flag"></login>
+            <register v-else></register>
+        </div>
+
+        <script src="./lib/vue.js"></script>
+        <script>
+            Vue.component('login', {
+                template: '<h3>登录组件</h3>'
+            });
+            Vue.component('register', {
+                template: '<h3>注册组件</h3>'
+            });
+            var vm = new Vue({
+                el: "#app",
+                data: {
+                    flag: true
+                }
+            })
+        </script>
+    </body>
+
+</html>
