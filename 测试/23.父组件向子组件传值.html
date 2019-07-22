@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>父组件向子组件传值</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <!-- 父组件通过属性绑定的形式传给子组件，绑定到某个属性c上。 -->
+            <com :c="content"></com>
+        </div>
+
+        <template id="com">
+            <div>
+                <h2>子组件</h2>
+                <!-- 就可以使用c了 -->
+                <h4>{{c}}</h4>
+            </div>
+        </template>
+
+        <script src="./lib/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        content: "Parent"
+                    }
+                },
+                components: {
+                    com: {
+                        props: ["c"], // 子组件注册接收的属性c
+                        template: '#com'
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>$refs和$parent</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <com ref="com"></com>
+            <input type="button" value="调用子组件的值" @click="getChildD">
+            <input type="button" value="调用子组件的方法" @click="getChildM">
+        </div>
+
+        <template id="com">
+            <div>
+                <h2>子组件</h2>
+                <input type="button" value="调用父组件的值" @click="getParentD">
+                <input type="button" value="调用父组件的方法" @click="getParentM">
+            </div>
+        </template>
+
+        <script src="./lib/vue.js"></script>
+        <script>
+            var com = {
+                template: '#com',
+                data() {
+                    return {
+                        data: "children Data"
+                    }
+                },
+                methods: {
+                    func() {
+                        console.log("children Method");
+                    },
+                    getParentD() {
+                        this.$parent.func();
+                    },
+                    getParentM() {
+                        console.log(this.$parent.data);
+                    }
+                }
+
+            }
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        data: "parent Data"
+                    }
+                },
+                methods: {
+                    func() {
+                        console.log("parent Method");
+                    },
+                    getChildM() {
+                        this.$refs.com.func();
+                    },
+                    getChildD() {
+                        console.log(this.$refs.com.data);
+                    }
+                },
+                components: {
+                    com
+                }
+            });
+        </script>
+    </body>
+
+</html>

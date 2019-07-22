@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>父组件向子组件传方法</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <com @fc="func"></com>
+        </div>
+
+        <template id="com">
+            <div>
+                <h2>子组件</h2>
+                <input type="button" value="show" @click="f">
+            </div>
+        </template>
+
+        <script src="./lib/vue.js"></script>
+        <script>
+            var com = {
+                template: '#com',
+                methods: {
+                    f(){
+                        this.$emit("fc");
+                    }
+                }
+
+            }
+            var vm = new Vue({
+                el: "#app",
+                methods: {
+                    func() {
+                        console.log("func");
+                    }
+                },
+                components: {
+                    com
+                }
+            });
+        </script>
+    </body>
+
+</html>
