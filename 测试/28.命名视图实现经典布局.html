@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>命名视图实现经典布局</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+
+            * {
+                padding: 0;
+                margin: 0;
+            }
+
+            html,
+            body {
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            #app {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .header {
+                height: 50px;
+                background-color: #aaa;
+            }
+
+            .container {
+                flex: 1;
+                display: flex;
+            }
+
+            .left {
+                background-color: #bbb;
+                flex: 2;
+            }
+
+            .main {
+                background-color: #ccc;
+                flex: 8;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <router-view name="head"></router-view>
+            <div class="container">
+                <router-view name="left"></router-view>
+                <router-view name="main"></router-view>
+            </div>
+        </div>
+
+        <script src="./lib/vue.js"></script>
+        <!-- 导入vue-router路由模块 -->
+        <script src="./lib/vue-router.js"></script>
+        <script>
+            var header = {
+                template: '<h2 class="header">Header头部区域</h2>'
+            }
+            var leftBox = {
+                template: '<h2 class="left">LeftBox左侧区域</h2>'
+            }
+            var mainBox = {
+                template: '<h2 class="main">MainBox主体区域</h2>'
+            }
+            var routerObj = new VueRouter({
+                routes: [{
+                    path: '/',
+                    // component: header
+                    components: {
+                        default: header,
+                        head: header,
+                        left: leftBox,
+                        main: mainBox
+                    }
+                }]
+            });
+            var vm = new Vue({
+                el: "#app",
+                router: routerObj
+            });
+        </script>
+    </body>
+
+</html>
