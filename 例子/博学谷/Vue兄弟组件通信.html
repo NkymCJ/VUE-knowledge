@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vue兄弟组件通信</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <brother></brother>
+            <brother2></brother2>
+        </div>
+
+
+        <template id="brother">
+            <div>
+                <div>我是哥哥{{ num }}</div>
+            </div>
+        </template>
+
+        <template id="brother2">
+            <div>
+                <div>我是弟弟</div>
+                <input type="button" value="+1" @click="addNum">
+            </div>
+        </template>
+        <script src="/例子/lib/vue-static/vue.js"></script>
+        <script>
+            var eventBus = new Vue();
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        num: 0
+                    }
+                },
+                methods: {
+
+                },
+                components: {
+                    brother: {
+                        template: "#brother",
+                        data() {
+                            return {
+                                num: 0
+                            }
+                        },
+                        mounted () {
+                            eventBus.$on("num",data=>{
+                                this.num += data;
+                            });
+                        }
+                    },
+                    brother2: {
+                        template: "#brother2",
+                        data() {
+                            return {
+                                num: 1
+                            }
+                        },
+                        methods: {
+                            addNum() {
+                                console.log("addNum");
+                                eventBus.$emit("num", this.num);
+                            }
+                        }
+                    }
+                }
+            })
+        </script>
+    </body>
+
+</html>

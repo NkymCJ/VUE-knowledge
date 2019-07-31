@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>使用wacth监视路由的变化</title>
+        <style>
+            [v-cloak] {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <!-- <a href="#/login">登录</a> -->
+            <!-- <a href="#/register">注册</a> -->
+            <router-link to="/login?value=123&key=456">登录</router-link>
+            <router-link to="/register/123/456" tag="div">注册</router-link>
+            <router-view></router-view>
+        </div>
+
+        <script src="./lib/vue.js"></script>
+        <!-- 导入vue-router路由模块 -->
+        <script src="./lib/vue-router.js"></script>
+        <script>
+            var login = {
+                template: '<h2>登录组件，query传递的参数为：{{$route.query.value}} - {{$route.query.key}}</h2>'
+            }
+            var register = {
+                template: '<h2>注册组件，params传递的参数为：{{$route.params.x}} - {{$route.params.y}}</h2>'
+            }
+            var routerObj = new VueRouter({
+                // [路由匹配规则]
+                routes: [{
+                        path: "/",
+                        redirect: "/login?value=123&key=456"
+                    },
+                    {
+                        path: "/login",
+                        component: login
+                    },
+                    {
+                        path: "/register/:x/:y",
+                        component: register
+                    }
+                ]
+            });
+            var vm = new Vue({
+                el: "#app",
+                router: routerObj,
+                watch: {
+                    '$route.path': function (newV, oldV) {
+                        console.log(newV, oldV);
+                        if (newV.indexOf("/login") != -1) {
+                            console.log("欢迎进入登录页面");
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

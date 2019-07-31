@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vue体验</title>
+        <style>
+            #app {
+                width: 600px;
+                margin: 10px auto;
+            }
+
+            .tb {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tb th {
+                background-color: darkturquoise;
+                color: #fff;
+            }
+
+            .tb td,
+            .tb th {
+                padding: 5px;
+                border: 1px solid #999;
+                text-align: center;
+            }
+
+            .add {
+                padding: 5px;
+                border: 1px solid #999;
+                margin-bottom: 10px;
+            }
+
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <div class="add">
+                用户编号：<input type="text">
+                用户姓名：<input type="text">
+                <input type="button" value="添加">
+            </div>
+            <div class="add">
+                用户姓名：<input type="text" placeholder="请输入搜索条件">
+            </div>
+
+            <div>
+                <table class="tb">
+                    <tr>
+                        <th>编号</th>
+                        <th>用户名</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr v-for="(item,index) in userList" :key="item.id">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.userName }}</td>
+                        <td>{{ item.addDateTime }}</td>
+                        <td @click="deleteUserData(index)">删除</td>
+                    </tr>
+                    <tr v-if="userList === 0">
+                        <td colspan="4">没有用户数据</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <script src="/例子/lib/vue-static/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+                        userList: [{
+                            id: 1,
+                            userName: "张三",
+                            addDateTime: new Date()
+                        }, {
+                            id: 2,
+                            userName: "李四",
+                            addDateTime: new Date()
+                        }, {
+                            id: 3,
+                            userName: "王五",
+                            addDateTime: new Date()
+                        }, {
+                            id: 4,
+                            userName: "马六",
+                            addDateTime: new Date()
+                        }]
+                    }
+                },
+                methods: {
+                    deleteUserData(index) {
+                        this.userList.splice(index, 1);
+                    }
+                }
+            })
+        </script>
+    </body>
+
+</html>

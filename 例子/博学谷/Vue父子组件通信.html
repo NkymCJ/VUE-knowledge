@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vue父子组件通信</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <father></father>
+        </div>
+
+
+        <template id="father">
+            <div>
+                <div>我是父组件</div>
+                <son @f="ff" :my-name="msg"></son>
+            </div>
+        </template>
+
+        <template id="son">
+            <div>
+                <p>我是子组件</p>
+                {{myName}}
+                <input type="button" @click="sf" value="点击">
+            </div>
+        </template>
+        <script src="/例子/lib/vue-static/vue.js"></script>
+        <script>
+            Vue.component("father", {
+                template: "#father",
+                data() {
+                    return {
+                        msg: "Hello"
+                    }
+                },
+                methods: {
+                    ff() {
+                        console.log("123");
+                    }
+                },
+                components: {
+                    son: {
+                        props: ["my-name"],
+                        template: "#son",
+                        methods: {
+                            sf() {
+                                this.$emit("f");
+                            }
+                        }
+                    }
+                }
+            });
+            var vm = new Vue({
+                el: "#app",
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                }
+            })
+        </script>
+    </body>
+
+</html>

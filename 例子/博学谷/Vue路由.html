@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vue路由</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app" v-cloak>
+            <router-link to="/index">首页</router-link>
+            <router-link to="/about">关于</router-link>
+            <router-link to="/shop">商品购物</router-link>
+            <router-view></router-view>
+        </div>
+        <template id="index">
+            <div>
+                <div>首页</div>
+            </div>
+        </template>
+
+        <template id="about">
+            <div>
+                <div>关于</div>
+            </div>
+        </template>
+        <template id="shop">
+            <div>
+                <div>商品购物</div>
+            </div>
+        </template>
+        <script src="/例子/lib/vue-static/vue.js"></script>
+        <script src="/例子/lib/vue-static/vue-router.js"></script>
+        <script>
+            var index = Vue.component('index', {
+                template: "#index"
+            });
+            var about = Vue.component('about', {
+                template: "#about"
+            });
+            var shop = Vue.component('shop', {
+                template: "#shop"
+            });
+
+            var router = new VueRouter({
+                routes: [{
+                        path: '/',
+                        redirect: '/index'
+                    }, {
+                        name: 'index',
+                        path: '/index',
+                        component: index
+                    },
+                    {
+                        name: 'about',
+                        path: '/about',
+                        component: about
+                    },
+                    {
+                        name: 'shop',
+                        path: '/shop',
+                        component: shop
+                    }
+                ]
+            });
+
+            var vm = new Vue({
+                el: "#app",
+                router,
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                }
+            })
+        </script>
+    </body>
+
+</html>
