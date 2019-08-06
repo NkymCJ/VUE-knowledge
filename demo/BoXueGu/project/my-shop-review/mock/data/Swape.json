@@ -1,0 +1,10 @@
+{
+    "status": 0,
+    "message": [{
+        "id": 0,
+        "img": "../../static/0.jpg"
+    },{
+        "id": 1,
+        "img": "../../static/1.jpg"
+    }]
+}
