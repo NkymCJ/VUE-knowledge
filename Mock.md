@@ -2,9 +2,9 @@
 
 2. 配置webpack-api-mocker。build文件夹下webpack.dev.conf.js完成如下配置。
 
-```
+``` JS
 const apiMocker = require('webpack-api-mocker')
-
+// ...
 devServer: {
     // 设置mock
     before(app) {
@@ -15,7 +15,7 @@ devServer: {
 
 3. 根目录下新建mock文件夹。mock文件夹下新建api.js。
 
-```
+``` JS
 const fs = require('fs') // node中的包。专门用于读取文件中的内容。
 
 const proxy = {

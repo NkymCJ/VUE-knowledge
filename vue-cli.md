@@ -1,21 +1,12 @@
-1. ```npm i webpack webpack-cli -g```
+1. `npm i webpack webpack-cli -g`
 
-2. ```npm i vue-cli -g```
+2. `npm i vue-cli -g`
 
-3. ```vue init webpack myshop```
-项目名称。小写。
-项目描述。
-项目作者。
-编译运行时。第一项。
-是否安装路由。是。
-是否使用ESLint检查语法格式。否。
-是否进行单元测试。否。
-是否使用e2e测试。否。
-安装包的方式。第一项。
+3. `vue init webpack myshop`
 
-4. ```cd project```
+4. `cd myshop`
 
-5. ```npm run dev```。改了配置的话就要Ctrl+C关闭，再npm run dev重新启动一次。
+5. `npm run dev`。改了配置的话就要`Ctrl+C`关闭，再跑一次。
 
 6. "@/xxx"的@指的是src下。
 
